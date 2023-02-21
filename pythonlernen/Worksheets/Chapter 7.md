@@ -1,6 +1,6 @@
-1. int (x=4), string (a="Hallo"), boolean (f=False), float(x=2.0) <br>
+1. int (x=4), str (a="Hallo"), bool (f=False), float(x=2.0) <br>
 
-2. Fehler, da das Array mit 0 anfängt und nicht mit 1 gibt es keine Stelle 5 in diesem Beispiel <br>
+2. 2, 101, Fehler, da das Array mit 0 anfängt und nicht mit 1 gibt es keine Stelle 5 in diesem Beispiel <br>
 
 3. 5, 2, 6, 8, 101 <br>
 
@@ -33,6 +33,7 @@ numbers = []
 for i in range(5):
     x = int(input("Gib eine Zahl ein"))
     numbers = numbers+[x]
+print(numbers)
 `````
 
 15. <br>

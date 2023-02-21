@@ -86,10 +86,10 @@ print(x == 5 or y == 5)
 #11
 """
 True
-True
-True
-True
 False
+True
+True
+True
 False
 False
 True
@@ -105,6 +105,8 @@ print( (2 == 2) == "True" )
 print( (2 == 2) == True )
 print(3 < "3")
 """
-
 #12 Die Antwort ist ein String, deshalb muss sie in " stehen also "A" oder "B" oder "C"
+#anstatt von else if muss elif stehen. Die Variable Money sollte man vor der If Anweisung deklarieren und 0 setzen 
+#in der If anweisung und elif muss zum vergleichen ein == verwendet werden
+# Im abschlusssatz könnte man nach dem "with" ein leerzeichen machen, dass die Zahl money nicht direkt an das wort ansetzt
 

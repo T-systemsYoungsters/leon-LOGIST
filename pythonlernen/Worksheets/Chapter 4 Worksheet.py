@@ -49,7 +49,6 @@ print(random_number)
 count_pos = 0
 count_neg = 0
 count_zero = 0
-number = 0
 total = 0
 
 for i in range(7):

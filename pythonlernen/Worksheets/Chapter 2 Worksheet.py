@@ -26,7 +26,7 @@
  
 #13 https://www.stepstone.de/jobs/softwareentwicklung : C, Python, Javascript, C#, SQL, PHP
 
-#14 Syntax ist die Anordnung der einzelnen Befehle oder Bausteine eines Programms (Grammatik) Semantik sagt ob das geschriebene überbaupt Sinn macht
+#14 Syntax ist die Folge von Zeichen, die einen gültigen pyhton programmtext darstellen. Dazu schreibt der Syntax die Anordnung der einzelnen Befehle oder Bausteine eines Programms( Grammatik) vor. Semantik sagt ob das geschriebene überbaupt Sinn macht
 
 #15 iPhone 12 A14 Bionic Chip
 #   Software IOS

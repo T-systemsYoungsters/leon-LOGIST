@@ -3,11 +3,12 @@ pygame.init()
 
 
 
-#1 Das Computerkoordinatensystem hat den Ursprung links oben mit (0,0). Die y-Achse die theoretisch vom Ursprung aus nach unten geht hat dennoch positive Werte
+#1 Das Computerkoordinatensystem hat den Ursprung links oben mit (0,0). Die y-Achse die vom Ursprung aus nach unten geht hat dennoch positive Werte.
+# Eingaben von - Zahlen sind auch möglich, diese Punkte sind jedoch nicht auf dem Screen zusehen.
 
 #2 import pygame und pygame.init()
 
-#3 spiegelt die RGB farben wieder : (Red, Green, Blue)
+#3 spiegelt die RGB farben wieder : (Red, Green, Blue) WHITE hat hier volle Intensität bei Rot, Grün und Blau. Jede Farbe hat einen Wert zur intensität zwischen 0 und 255
 
 #4 wenn die Farbe seinen Wert im Laufe des Programms nicht verändert also bei einer konstanten
 
@@ -33,7 +34,8 @@ for x in range(0,100,20):
 #11 20,20 sind die linke obere  ecke des rechtecks, in der sich die ellipse befindet.
     #100 ist die Höhe/Breite und 250 die Länge
 
-#12 pi muss als variable definiert werden
+#12 arc(surface, color, rect, start_angle, stop_angle)
+#ellipse(surface, color, rect)
 
 #13 Festlegen welche Font und font größe verwendet werden soll, dann einen "Stempel"
     #generieren, auf dem der Text steht und schließlich diesen Stempel auf das Fenster "abdrücken"

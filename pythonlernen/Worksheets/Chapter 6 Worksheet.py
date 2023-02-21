@@ -39,7 +39,7 @@ while x > 0:
 print("Blast-off")
 """
 
-#7 das i+=1 ist unnötig, da das die for schleife automatisch macht
+#7 das i+=1 ist unnötig, da das die for schleife automatisch macht. i=0 ist auch überflüssig
 """
 i = 0
 for i in range(10):
