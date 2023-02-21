@@ -26,6 +26,13 @@ done = False
 clock=pygame.time.Clock()
 
 
+star_list =[]
+for i in range(30):
+    x = random.randrange(0, 700, 50)
+    y = random.randrange(0,300,50)
+    line =random.randrange(1,3)
+    star_list.append([x,y,line])
+
 while not done:
     
     #all event processing should go below this comment
@@ -72,10 +79,13 @@ while not done:
         pygame.draw.line(screen, STAR, [x+95,y+100],[x+105,y+100],line)
         pygame.draw.line(screen, STAR, [x+95,y+95],[x+105,y+105],line)
 """
-    for i in range(12):
-        x = random.randrange(0,700, 50)
-        y = random.randrange(0,300, 50)
-        line =random.randrange(1,3)
+    for item in star_list:
+        
+        
+        x=item[0]
+        y=item[1]
+        
+        line =item[2]
         pygame.draw.line(screen, STAR, [x+10,y+5],[x+10,y+15],line)
         pygame.draw.line(screen, STAR, [x+5,y+15],[x+15,y+5],line)
         pygame.draw.line(screen, STAR, [x+5,y+10],[x+15,y+10],line)
