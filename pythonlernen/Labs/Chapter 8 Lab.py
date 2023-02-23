@@ -2,7 +2,6 @@ import pygame
 import random
 import math
 
-
 pygame.init()
 
 WHITE = (255,255,255)
@@ -15,7 +14,7 @@ MOON  = (240, 230, 140)
 MOON_1= (189, 183, 107)
 HOUSE = (10,10,10)
 STRASSE = (64,64,64)
-LIGHT_BLUE = (0, 0,255)
+LIGHT_BLUE =(0,191,255)
 LIGHT_RED =(255,0,0)
 LIGHT_GREEN=(0,255,0)
 LIGHT_YELLOW = (255,255,0)
@@ -72,9 +71,6 @@ while not done:
         if event.type == pygame.QUIT:        #If user clicked close
             done = True                     #flag that we are done so exit the loop
 
-    #all event processing should go above this comment
-
-
     #all game logic should go below this comment
     if light_count < 40:
         light = LIGHT_BLUE
@@ -83,11 +79,6 @@ while not done:
     else:
         light_count = 0
     
-    
-
-
-    
-
     if ufo_x > 699 or ufo_x<1:
         ufo_change_x *=-1
     if ufo_y > 299 or ufo_y < 1:
@@ -116,12 +107,10 @@ while not done:
     if angle > 2* PI:
         angle = angle -2*PI
 
-    light_count +=1
-    #all game logic should go above this comment
-            
+    light_count +=1         
 
     #all code to draw should go below this comment
-    #Himme = ganzer Hintergrund
+    #Himmel = ganzer Hintergrund
     screen.fill(SKY)
 
     #Mond
@@ -139,16 +128,6 @@ while not done:
     pygame.draw.circle(screen, MOON_1, [612, 70], 4)
 
     #Sterne
-    """
-    for i in range(3):
-        x = random.randrange(0,550, 50)
-        y = random.randrange(0,100, 20)
-        line =random.randrange(1,3)
-        pygame.draw.line(screen, STAR, [x+100,y+95],[x+100,y+105],line)
-        pygame.draw.line(screen, STAR, [x+95,y+105],[x+105,y+95],line)
-        pygame.draw.line(screen, STAR, [x+95,y+100],[x+105,y+100],line)
-        pygame.draw.line(screen, STAR, [x+95,y+95],[x+105,y+105],line)
-"""
     for item in star_list:
         x=item[0]
         y=item[1]
@@ -173,17 +152,13 @@ while not done:
     pygame.draw.circle(screen, color_ufo_1, [ufo_x, ufo_y], 2)
     pygame.draw.circle(screen, color_ufo_1, [ufo_x+1, ufo_y+1], 2)
 
-
     #Licht um den Mond
     pygame.draw.circle(screen, color_ufo_1, [light_moon_x, light_moon_y], 2)
-
 
     ufo_x += ufo_change_x
     ufo_y += ufo_change_y
     #Wasser
     pygame.draw.rect(screen, WATER, [0,300, 700, 350])
-
-    
     
     #Boden
     pygame.draw.rect(screen, GRASS, [0,400, 700,500])
@@ -196,10 +171,7 @@ while not done:
     #Haus
     pygame.draw.rect(screen, HOUSE, [330, 250, 350,150])
     pygame.draw.polygon(screen, HOUSE, [[330, 250],[490,100],[679,250]])
-    """
-    for i in range(0,100,20):
-        pygame.draw.rect(screen, STAR, [360, 265, 15,25])
-    """
+   
     pygame.draw.rect(screen, STAR, [360, 265, 15,25])
     pygame.draw.rect(screen, STAR, [440, 300, 15,25])
     pygame.draw.rect(screen, STAR, [540, 350, 15,25])
@@ -221,12 +193,8 @@ while not done:
 
     screen.blit(text, [205, 435])
     pygame.display.flip()   # zeigt das gezeichnete auf dem Bildschirm an
-    #all code to draw should go above this comment
 
-
-
-    #limit tp frames per second
-            
+    #limit tp frames per second     
     clock.tick(60)
 
 pygame.quit()
