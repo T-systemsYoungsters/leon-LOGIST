@@ -115,11 +115,11 @@ while not done:
         pygame.draw.line(screen, STAR, [x+5,y+5],[x+15,y+15],line)
     
     #Sternschnuppe
-    pygame.draw.line(screen, STAR, [schnuppe_x+10,schnuppe_y+5],[schnuppe_x+10,schnuppe_y+15],1)
-    pygame.draw.line(screen, STAR, [schnuppe_x+5,schnuppe_y+15],[schnuppe_x+15,schnuppe_y+5],1)
-    pygame.draw.line(screen, STAR, [schnuppe_x+5,schnuppe_y+10],[schnuppe_x+15,schnuppe_y+10],1)
-    pygame.draw.line(screen, STAR, [schnuppe_x+5,schnuppe_y+5],[schnuppe_x+15,schnuppe_y+15],1)
-    pygame.draw.polygon(screen,STAR, [[schnuppe_x,schnuppe_y],[schnuppe_x-5,schnuppe_y-1],[schnuppe_x-4,schnuppe_y-3]], 2)
+    pygame.draw.line(screen, STAR, [schnuppe_x+5,schnuppe_y],[schnuppe_x+5,schnuppe_y+10],1)
+    pygame.draw.line(screen, STAR, [schnuppe_x,schnuppe_y+10],[schnuppe_x+10,schnuppe_y],1)
+    pygame.draw.line(screen, STAR, [schnuppe_x,schnuppe_y+5],[schnuppe_x+10,schnuppe_y+5],1)
+    pygame.draw.line(screen, STAR, [schnuppe_x,schnuppe_y],[schnuppe_x+10,schnuppe_y+10],1)
+    pygame.draw.polygon(screen,STAR, [[schnuppe_x,schnuppe_y],[schnuppe_x-5,schnuppe_y-1],[schnuppe_x-4,schnuppe_y-3]],1)
 
     schnuppe_x += schnuppe_change_x
     schnuppe_y += schnuppe_change_y
