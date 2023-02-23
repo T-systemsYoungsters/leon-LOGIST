@@ -1,6 +1,9 @@
 import pygame
-pygame.init()
 import random
+import math
+
+
+pygame.init()
 
 WHITE = (255,255,255)
 GRASS = (0,100,0)
@@ -12,9 +15,10 @@ MOON  = (240, 230, 140)
 MOON_1= (189, 183, 107)
 HOUSE = (10,10,10)
 STRASSE = (64,64,64)
-LIGHT_BLAU = (0, 0,255)
-LICHT_ROT =(255,0,0)
-
+LIGHT_BLUE = (0, 0,255)
+LIGHT_RED =(255,0,0)
+LIGHT_GREEN=(0,255,0)
+LIGHT_YELLOW = (255,255,0)
 
 size = (700, 500)
 screen = pygame.display.set_mode(size)
@@ -44,6 +48,21 @@ for i in range(30):
 schnuppe_x = 0
 schnuppe_y= 0
 
+ufo_x = random.randrange(1, 690)
+ufo_y = 2
+
+#change sternschnuppe
+schnuppe_change_x = 3
+schnuppe_change_y = 0.5
+
+#change sat
+ufo_change_x = 2
+ufo_change_y = 0.75
+
+angle =0
+
+PI = 3.141592653
+
 while not done:
     
     #all event processing should go below this comment
@@ -58,20 +77,46 @@ while not done:
 
     #all game logic should go below this comment
     if light_count < 40:
-        light = LIGHT_BLAU
+        light = LIGHT_BLUE
     elif light_count < 80:
-        light = LICHT_ROT
+        light = LIGHT_RED
     else:
         light_count = 0
     
+    
+
+
+    
+
+    if ufo_x > 699 or ufo_x<1:
+        ufo_change_x *=-1
+    if ufo_y > 299 or ufo_y < 1:
+        ufo_change_y*=-1
+
+    if light_count < 20:
+        color_ufo_1 = LIGHT_RED
+        color_ufo_2 = LIGHT_GREEN
+    elif light_count < 40:
+        color_ufo_1 = LIGHT_GREEN
+        color_ufo_2 = LIGHT_BLUE
+    elif light_count < 60:
+        color_ufo_1 = LIGHT_BLUE
+        color_ufo_2 = LIGHT_YELLOW
+    elif light_count < 80:
+        color_ufo_1 = LIGHT_YELLOW
+        color_ufo_2 = LIGHT_RED
+    
+    #x und y von dem Licht, welches um den Mond kreist
+    
+    light_moon_x = 45*math.sin(angle) +600
+    light_moon_y = 45*math.cos(angle) +50
+
+    angle += 0.03
+
+    if angle > 2* PI:
+        angle = angle -2*PI
+
     light_count +=1
-
-
-    #change sternschnuppe
-    schnuppe_change_x = 3
-    schnuppe_change_y = 0.5
-
-
     #all game logic should go above this comment
             
 
@@ -124,6 +169,17 @@ while not done:
     schnuppe_x += schnuppe_change_x
     schnuppe_y += schnuppe_change_y
 
+    #ufo
+    pygame.draw.circle(screen, color_ufo_1, [ufo_x, ufo_y], 2)
+    pygame.draw.circle(screen, color_ufo_1, [ufo_x+1, ufo_y+1], 2)
+
+
+    #Licht um den Mond
+    pygame.draw.circle(screen, color_ufo_1, [light_moon_x, light_moon_y], 2)
+
+
+    ufo_x += ufo_change_x
+    ufo_y += ufo_change_y
     #Wasser
     pygame.draw.rect(screen, WATER, [0,300, 700, 350])
 
