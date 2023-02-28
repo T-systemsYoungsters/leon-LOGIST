@@ -1,7 +1,10 @@
 
-
+import os
 import pygame
  
+path = os.getcwd()
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -18,14 +21,6 @@ plane_y_coord = 300
 
 plane_x_speed = 0
 plane_y_speed = 0 
-
-
-
-
-
-def draw_streifen(i):
-    pygame.draw.line(screen, WHITE, [638,0+i],[638, 20 + i], 4 )
-
 
 def draw_plane(x,y):
     #body
@@ -62,12 +57,17 @@ pygame.mouse.set_visible(0)
 
 background_image = pygame.image.load("sky.jpg").convert()
 
+click_sound = pygame.mixer.Sound("laser1.wav")
+
 # -------- Main Program Loop -----------
 while not done:
     # --- Main event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            click_sound.play()
+        
     # --- Game logic should go here
         
     
@@ -78,14 +78,9 @@ while not done:
 
     # If you want a background image, replace this clear with blit'ing the
     # background image.
-    screen.bit(background_image, [0,0])
-   
-    
+    screen.blit(background_image, [0,0]) 
     draw_plane(plane_x_coord, plane_y_coord)
     pygame.display.flip()
-    
-    
-    clock.tick(60)
- 
+clock.tick(60)
 
 pygame.quit()
