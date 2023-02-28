@@ -1,16 +1,15 @@
-1. es werden zwar ein x und y in die Funktion übergeben, werden in der Funktion aber nicht benutzt. Die Funktion zeichnet immer an der selben stelle eine Figur <br>
+1. Explorer-Optionen -> Ansicht -> Erweiterungen bei bekannten Dateitypen ausblenden: deaktivieren <br>
 
-2. 
-````python
-pos = pygame.mouse.get_pos()
-x= pos[0]
-````
-<br>
+2.  Photos: .jpg <br>
+Graphic art: gif, png <br>
+uncompressed images: bmp<br>
+Uncompressed sounds: .wav <br>
+songs and soundeffects:  mp3,.ogg<br>
 
-3. Wenn code, der nichts mit event processing zutun hat in der for schleife ist und event processing teilt, kann es, wenn es mehrere events gibt wie key down und key up zu problemen führen, dass eines nicht verarbeitet wird, so kann das Programm mit dem eingabegerät unsynchron werden. <br>
+3. load außerhalb, blit inenrhalb der Mainloop <br>
 
-4. wenn keine taste gedrückt wird, soll das objekt sich nicht bewegen, dadurch muss die change variable 0 sein. Wenn eine Taste gedrückt wird wird diese Variable auf einen pos/negativen wert gesetzt um eine Richtungsänderung zu erschaffen, solange die Taste gedrückt wird. Danach wird change wieder auf 0 gesetzt. Wenn man nur per Befehl die Richtung ändern will, also das Objekt bewegt sich die ganze zeit auf x positiv und man will dass es sich jetzt richtung x negativ bewegt funtkioniert die Technik wie beim bouncing rectangle auch<br>
+4. man kann in einem Bildbearbeitungsprogramm ein jpg als gif abspeichern, jedoch kommt es dabei immer wieder zu Problemen, da beim konvertieren die Bilddatei immer leicht abgeändert wird.n <br>
 
-5. Da wir die position der Maus durch eine Funktion bekommen, jedoch kann man die position der Tastatur nicht rausbekommen, da sie sich ja nicht wie der Mauszeiger auf dem Bildschirm befindet. <br>
+5. Jpg speichert Bilder mit abgeänderten Farben, um Speicher zu sparen, dadurch bleiben auch beim konvertieren in ein anderes Dateiformat diese Farbunterschiede vorhanden. <br>
 
-6. (1,1)
+6. der erste Song wird außerhalb der mainloop geloaded und play durch pygame.mixer.music.load() und pygame.mixer.music.play(). Zusätzlich wird ein Endevent erstellt, dass dann in der Mainloop der Start für den näschten Song ist: Durch pygame.mixer.music.set_endevent()<br>
