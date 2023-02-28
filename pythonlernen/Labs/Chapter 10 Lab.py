@@ -93,14 +93,18 @@ while not done:
             done = True
 
         if event.type == pygame.KEYDOWN:
+        
             if event.key == pygame.K_LEFT:
-                plane_x_speed = -3
-            if event.key == pygame.K_RIGHT:
-                plane_x_speed = 3
+                plane_x_speed = -8
             if event.key == pygame.K_UP:
-                plane_y_speed = -2
+                plane_y_speed = -5
+            
+            if event.key == pygame.K_RIGHT:
+                plane_x_speed = 8
             if event.key == pygame.K_DOWN:
-                plane_y_speed = 2
+                plane_y_speed = 5
+            
+            
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
@@ -113,6 +117,15 @@ while not done:
                 plane_y_speed = 0
 
     # --- Game logic should go here
+        
+    if plane_x_coord > 1120 and plane_x_speed > 0:
+        plane_x_speed = 0
+    elif plane_x_coord < 80 and plane_x_speed < 0:
+        plane_x_speed = 0
+    if plane_y_coord > 515 and plane_y_speed > 0:
+        plane_y_speed = 0
+    elif plane_y_coord < 5 and plane_y_speed < 0:
+        plane_y_speed = 0
     plane_x_coord += plane_x_speed
     plane_y_coord += plane_y_speed  
 
