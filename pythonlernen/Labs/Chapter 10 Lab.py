@@ -20,9 +20,6 @@ plane_x_speed = 0
 plane_y_speed = 0 
 
 
-
-
-
 def draw_streifen(i):
     pygame.draw.line(screen, WHITE, [638,0+i],[638, 20 + i], 4 )
 

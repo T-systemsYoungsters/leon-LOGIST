@@ -1,8 +1,8 @@
-
 import os
 import pygame
- 
-path = os.getcwd()
+
+
+# cd --> change directory (chapter 11 Lab)
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # Define some colors
