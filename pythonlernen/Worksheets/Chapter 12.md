@@ -39,9 +39,10 @@ his_dude.email = "boris.boris@telekom.de"
 5. 
 ````python
 class  Bird():
-    color = ""
-    name = ""
-    breed = ""
+    def __init_(self):
+        self.color = ""
+        self.name = ""
+        self.breed = ""
 
 my_bird = Bird()
 my_bird.color = "green"
@@ -54,10 +55,10 @@ my_bird.breed = "Sun Conure"
 ````python
 class Character():
     def __init__(self)
-        x_coord = 0
-        y_coord = 0
-        name = ""
-        strength = 10
+        self.x_coord = 
+        self.y_coord = 
+        self.name = ""
+        self.strength =
 ````
 <br>
 
@@ -66,7 +67,7 @@ class Character():
 class Person():
     def __init__(self):
         self.name = ""
-        self.money = 0
+        self.money = 
  
 nancy = Person()
 name = "Nancy"
@@ -80,7 +81,7 @@ Es muss nancy.name und nancy.money sein <br>
 class Person():
     def __init__(self):
         self.name = ""
-        self.money = 0
+        self.money = 
  
 bob = Person()
 print(bob.name, "has", money, "dollars.")
@@ -163,8 +164,8 @@ my_dog2.name = "Alpha"
 my_dog2.eat()
 my_dog2.make_noise()
 
-my_dog3 = Dog()
-my_dog3.name = "Hund3"
-my_dog3.eat()
-my_dog3.make_noise()
+my_animal = Animal()
+my_animal.name = "Tier"
+my_animal.eat()
+my_animal.make_noise()
 ````
