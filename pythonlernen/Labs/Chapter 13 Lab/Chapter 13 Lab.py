@@ -2,8 +2,6 @@ import pygame
 import random
 import os
 
-
-
 # cd --> change directory (chapter 11 Lab)
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -151,6 +149,8 @@ good_block = pygame.mixer.Sound("good_block.wav")
 bad_block = pygame.mixer.Sound("bad_block.wav")
 bump = pygame.mixer.Sound("bump.wav")
 
+font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
+
 # -------- Main Program Loop -----------
 while not done:
     for event in pygame.event.get(): 
@@ -186,13 +186,6 @@ while not done:
     # Clear the screen
     screen.fill(WHITE)
  
-    # Get the current mouse position. This returns the position
-    # as a list of two numbers.
-    
-    
-    # Fetch the x and y out of the list,
-       # just like we'd fetch letters out of a string.
-    # Set the player object to the mouse location
     
     
     # See if the player block has collided with anything.
@@ -201,17 +194,19 @@ while not done:
     for block in blocks_hit_list:
         score += 1
         good_block.play()
-        print(score)
-    
+
+
     blocks_hit_list = pygame.sprite.spritecollide(player, bad_block_list, True)
     for block in blocks_hit_list:
         score -= 1
         bad_block.play()
-        print(score)
+        
 
     # Draw all the spites
     all_sprites_list.draw(screen)
- 
+
+    text_score = font.render("Score: " +str(score), True, BLACK)
+    screen.blit(text_score, [5,5])
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
