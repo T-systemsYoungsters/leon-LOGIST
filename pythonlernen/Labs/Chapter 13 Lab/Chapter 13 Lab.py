@@ -11,6 +11,7 @@ WHITE = (255, 255, 255)
 RED   = (255,   0,   0)
 BLUE  = (  0,   0, 255)
 GREEN = (  0, 255,   0)
+#transparent = 0,0,0
  
 class Block(pygame.sprite.Sprite):
     """
@@ -18,42 +19,56 @@ class Block(pygame.sprite.Sprite):
     It derives from the "Sprite" class in Pygame.
     """
  
-    def __init__(self, color, width, height):
-        """ Constructor. Pass in the color of the block,
-        and its size. """
+    # def __init__(self, color, width, height):
+    #     """ Constructor. Pass in the color of the block,
+    #     and its size. """
  
+    #     # Call the parent class (Sprite) constructor
+    #     super().__init__()
+ 
+    #     # Create an image of the block, and fill it with a color.
+    #     # This could also be an image loaded from the disk.
+    #     self.image = pygame.Surface([width, height])
+    #     self.image.fill(color)
+ 
+    #     # Fetch the rectangle object that has the dimensions of the image
+    #     # image.
+    #     # Update the position of this object by setting the values
+    #     # of rect.x and rect.y
+    #     self.rect = self.image.get_rect()
+    def __init__(self, filename):
         # Call the parent class (Sprite) constructor
-        super().__init__()
+        super().__init__() 
  
         # Create an image of the block, and fill it with a color.
         # This could also be an image loaded from the disk.
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
+        self.image = pygame.image.load(filename).convert()
  
+        # Set background color to be transparent. Adjust to WHITE if your
+        # background is WHITE.
+        if filename == "gem-1.png":
+            self.image.set_colorkey(GREEN)
+        else:
+            self.image.set_colorkey(BLACK)
         # Fetch the rectangle object that has the dimensions of the image
         # image.
-        # Update the position of this object by setting the values
+        # Update the position of this object by setting the values 
         # of rect.x and rect.y
         self.rect = self.image.get_rect()
- 
 
 class Player(pygame.sprite.Sprite):
     """ The class is the player-controlled sprite. """
  
     # -- Methods
-    def __init__(self, x, y):
+    def __init__(self, filename):
         """Constructor function"""
         # Call the parent's constructor
         super().__init__()
  
         # Set height, width
-        self.image = pygame.Surface([15, 15])
-        self.image.fill(BLUE)
- 
+        self.image = pygame.image.load(filename)
+        self.rect = self.image.get_rect() 
         # Make our top-left corner the passed-in location.
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
  
         # -- Attributes
         # Set speed vector
@@ -89,8 +104,8 @@ class Player(pygame.sprite.Sprite):
 pygame.init()
  
 # Set the height and width of the screen
-screen_width = 700
-screen_height = 400
+screen_width = 1280 #700
+screen_height = 720 #400
 screen = pygame.display.set_mode([screen_width, screen_height])
  
 # This is a list of 'sprites.' Each block in the program is
@@ -104,7 +119,7 @@ all_sprites_list = pygame.sprite.Group()
 #bad blocks 
 for i in range(50):
     # This represents a block
-    block = Block(RED, 20, 15)
+    block = Block("planet-5.png")
  
     # Set a random location for the block
     block.rect.x = random.randrange(screen_width)
@@ -117,7 +132,7 @@ for i in range(50):
 #good blocks
 for i in range(50):
     # This represents a block
-    block = Block(GREEN, 20, 15)
+    block = Block("gem-1.png")
  
     # Set a random location for the block
     block.rect.x = random.randrange(screen_width)
@@ -129,7 +144,7 @@ for i in range(50):
  
 
 # Create a BLUE player block
-player = Player(10,10)
+player = Player("spiked ship 3. small.green_80.png")
 all_sprites_list.add(player)
  
 # Loop until the user clicks the close button.
@@ -139,17 +154,25 @@ done = False
 clock = pygame.time.Clock()
  
 score = 0
- 
-pygame.mixer.music.load("a_block_in_space.wav")
-pygame.mixer.music.set_volume(0.3)
-pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-pygame.mixer.music.play() 
-
+#################################
+# Musste  die Hintergrundmusik raus nehmen, da am Arbeitslaptop eine Fehlermeldung kommt, finde keine Lösung... 
+# Traceback (most recent call last):
+# File "...", line 143, in <module>
+# pygame.mixer.music.load("a_block_in_space.wav")
+# pygame.error: Unknown PCM data format
+#################################
+# pygame.mixer.music.load("a_block_in_space.wav")
+# pygame.mixer.music.set_volume(0.3)
+# pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+# pygame.mixer.music.play() 
+#################################
 good_block = pygame.mixer.Sound("good_block.wav")
 bad_block = pygame.mixer.Sound("bad_block.wav")
 bump = pygame.mixer.Sound("bump.wav")
 
 font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
+
+background_image = pygame.image.load("space1.png").convert()
 
 # -------- Main Program Loop -----------
 while not done:
@@ -157,9 +180,9 @@ while not done:
         if event.type == pygame.QUIT: 
             done = True
         #background music
-        elif event.type == pygame.constants.USEREVENT:
-            pygame.mixer.music.load("a_block_in_space.wav")
-            pygame.mixer.music.play()    
+        # elif event.type == pygame.constants.USEREVENT:
+        #     pygame.mixer.music.load("a_block_in_space.wav")
+        #     pygame.mixer.music.play()    
         # Set the speed based on the key pressed
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -183,10 +206,7 @@ while not done:
                 player.changespeed(0, -3)
 
     all_sprites_list.update()
-    # Clear the screen
-    screen.fill(WHITE)
- 
-    
+    # Clear the screen 
     
     # See if the player block has collided with anything.
     blocks_hit_list = pygame.sprite.spritecollide(player, good_block_list, True)
@@ -202,10 +222,11 @@ while not done:
         bad_block.play()
         
 
+    screen.blit(background_image, [0, 0])
     # Draw all the spites
     all_sprites_list.draw(screen)
 
-    text_score = font.render("Score: " +str(score), True, BLACK)
+    text_score = font.render("Score: " +str(score), True, WHITE)
     screen.blit(text_score, [5,5])
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
