@@ -1,14 +1,14 @@
-def fibonacci(nterms, x, y):
-    if c < dur:
-        z = x+y
-        x=y
-        y=z
-        c += 1
-        print("{:2} - {:9,}".format(nterms, x))
-        fibonacci(dur, x, y)
+nterm = 35
+a = 0
+b = 1
+count = 0
+def fibonacci(a,b,count, nterm):
+    tmp = a
+    a = b
+    b += tmp
+    count += 1
+    print("{:2} -   {:9,}".format(count, a))
+    if count < nterm: 
+        fibonacci(a,b,count, nterm)
 
-c=0
-nterms =35
-x = 0
-y = 1
-fibonacci(nterms, x, y)
+fibonacci(a, b, count, nterm)

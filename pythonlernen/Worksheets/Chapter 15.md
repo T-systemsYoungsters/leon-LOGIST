@@ -31,7 +31,7 @@ binary search <br>
 
 3. ld(n) mal <br>
 
-4. <br>
+4. ld(n)<br>
 
 5. 
 ````python
@@ -57,7 +57,8 @@ def binary_search(list, s):
 ````
 <br>
 
-6. 
+6. Der code funktioniert nicht, da nur das erste Element einer Liste geprüft wird, da entweder True oder False returned wird. 
+Der Folgende Code returned True wenn er eine pos zahl findet und wenn nicht läuft die schleife ganz durch und danach wird false returned
 ````python
 def detect_positive(list):
     found = False
