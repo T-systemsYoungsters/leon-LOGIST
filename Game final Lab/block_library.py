@@ -1,0 +1,29 @@
+import pygame
+
+class Block(pygame.sprite.Sprite):
+    """
+    This class represents the ball.
+    It derives from the "Sprite" class in Pygame.
+    """
+ 
+    def __init__(self, filename):
+        """ Constructor. Pass in the color of the block,
+        and its size. """
+ 
+        super().__init__() 
+ 
+        # Create an image of the block, and fill it with a color.
+        # This could also be an image loaded from the disk.
+        self.image = pygame.image.load(filename).convert()
+ 
+        # Set background color to be transparent. Adjust to WHITE if your
+        # background is WHITE.
+        if filename == "gem-1.png":
+            self.image.set_colorkey(GREEN)
+        else:
+            self.image.set_colorkey(BLACK)
+        # Fetch the rectangle object that has the dimensions of the image
+        # image.
+        # Update the position of this object by setting the values 
+        # of rect.x and rect.y
+        self.rect = self.image.get_rect()
