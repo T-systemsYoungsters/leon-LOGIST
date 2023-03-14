@@ -6,6 +6,6 @@ class BadBlock(block_library.Block):
         self.rect.y = random.randrange(-30, -19)
         self.rect.x = random.randrange(1280-20)
     def update(self):
-        self.rect.y +=1
+        self.rect.y +=2
         if self.rect.y > 740:
             self.reset_pos()

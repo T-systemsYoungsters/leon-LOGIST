@@ -11,11 +11,17 @@ BLUE  = (  0,   0, 255)
 GREEN = (  0, 255,   0)
 
 # Set the height and width of the screen
-screen_width = 1280
-screen_height = 720
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 
 #music
 
+#health
+HEALTH = []
+for i in range(11):
+    health = pygame.image.load(os.path.join("resources", f"VIDA_{i}.png"))
+    HEALTH.append(health)
+   
 #backgrounds
 BACKGROUND_LIST = []
 BACKGROUND_IMAGE_MENU = pygame.image.load(os.path.join("resources", "Background-1.png"))
@@ -31,7 +37,7 @@ BACKGROUND_IMAGE_MENU = pygame.image.load(os.path.join("resources", "Background-
 # BACKGROUND_IMAGE_10 = pygame.image.load(os.path.join("resources", "Background-11.png"))
 
 #bullet
-BULLET = pygame.image.load(os.path.join("resources", "bullet.png"))
+BULLET = pygame.image.load(os.path.join("resources", "bullet_top.png"))
 #ships
 #player-ships
 PLAYER_SHIP_LIST = []
@@ -40,7 +46,10 @@ PLAYER_SHIP_1 = pygame.image.load(os.path.join("resources","blueships1.png" ))
 #friendly_ships
 
 #enemy-ships
-
+ENEMY_SHIP_LIST = []
+for i in range(3):
+    ship = pygame.image.load(os.path.join("resources", f"EnemyShip_{i}.png"))
+    ENEMY_SHIP_LIST.append(ship)
 #effects_ships
 
 #icons

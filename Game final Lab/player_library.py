@@ -14,12 +14,16 @@ class Player(pygame.sprite.Sprite):
         """Constructor function"""
         # Call the parent's constructor
         super().__init__()
- 
+
+        #player stats:
+        self.health = 50
+        self.boost = 20
         # Set height, width
         self.image = ship
         self.rect = self.image.get_rect() 
-        # Make our top-left corner the passed-in location.
- 
+        
+        self.rect.x = (self.image.get_width()+SCREEN_WIDTH) // 2
+        self.rect.y = (self.image.get_width()+SCREEN_HEIGHT) // 2
         # -- Attributes
         # Set speed vector
         self.change_x = 0
@@ -34,13 +38,13 @@ class Player(pygame.sprite.Sprite):
         """ Find a new position for the player"""
         
 
-        if self.rect.x > screen_width - 15:
+        if self.rect.x > SCREEN_WIDTH - 15:
             self.rect.x -= 1
             #bump.play()
         elif self.rect.x < 0:
             self.rect.x += 1
             #bump.play()
-        elif self.rect.y > screen_height-15:
+        elif self.rect.y > SCREEN_HEIGHT-15:
             self.rect.y -= 1
             #bump.play()
         elif self.rect.y < 0:
