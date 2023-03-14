@@ -3,11 +3,11 @@ import random
 
 class GoodBLock(block_library.Block):
     def update(self):
-        if self.rect.x > 685:
+        if self.rect.x > 1265:
             self.rect.x -= random.randrange(4)
         elif self.rect.x < 0:
             self.rect.x += random.randrange(4)
-        elif self.rect.y > 385:
+        elif self.rect.y > 705:
             self.rect.y -= random.randrange(4)
         elif self.rect.y < 0:
             self.rect.y += random.randrange(4)
