@@ -30,6 +30,8 @@ BACKGROUND_IMAGE_MENU = pygame.image.load(os.path.join("resources", "Background-
 # BACKGROUND_IMAGE_9 = pygame.image.load(os.path.join("resources", "Background-10.jpg"))
 # BACKGROUND_IMAGE_10 = pygame.image.load(os.path.join("resources", "Background-11.png"))
 
+#bullet
+BULLET = pygame.image.load(os.path.join("resources", "bullet.png"))
 #ships
 #player-ships
 PLAYER_SHIP_LIST = []

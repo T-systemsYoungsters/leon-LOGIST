@@ -49,3 +49,5 @@ class Player(pygame.sprite.Sprite):
         else:
             self.rect.x += self.change_x
             self.rect.y += self.change_y
+        
+        

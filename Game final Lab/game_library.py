@@ -2,6 +2,7 @@ import pygame
 import random
 import badblock_library
 import goodblock_library
+import bullet_library
 from game_const_library import *
 import player_library
 import os
@@ -15,6 +16,7 @@ class Game():
     block_list = None
     bad_block_list = None
     good_block_list = None
+    bullet_list = None
     all_sprites_list = None
     player = None
     game_over = False
@@ -28,6 +30,7 @@ class Game():
     # added to this list. The list is managed by a class called 'Group.'
         self.bad_block_list = pygame.sprite.Group()
         self.good_block_list = pygame.sprite.Group()
+        self.bullet_list = pygame.sprite.Group()
         # This is a list of every sprite.
         # All blocks and the player block as well.
         self.all_sprites_list = pygame.sprite.Group()
@@ -74,16 +77,26 @@ class Game():
             #     pygame.mixer.music.load("a_block_in_space.wav")
             #     #pygame.mixer.music.play()    
             # Set the speed based on the key pressed
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                    bullet = bullet_library.Bullet(BULLET)
+                    bullet.rect.x = self.player.rect.x
+                    bullet.rect.y = self.player.rect.y
+                    
+                    self.all_sprites_list.add(bullet)
+                    self.bullet_list.add(bullet)   
+
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.player.changespeed(-3, 0)
-                elif event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     self.player.changespeed(3, 0)
                 elif event.key == pygame.K_UP:
                     self.player.changespeed(0, -3)
                 elif event.key == pygame.K_DOWN:
                     self.player.changespeed(0, 3)
-    
+                    #bullets
+                elif event.key == pygame.K_LEFT:
+                    self.player.changespeed(-3, 0)
+
             # Reset speed when key goes up
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
@@ -103,6 +116,17 @@ class Game():
             # See if the player block has collided with anything.
             blocks_hit_list = pygame.sprite.spritecollide(
                 self.player, self.good_block_list, True)
+
+            for bullet in self.bullet_list:
+                bullet_block_hit_list = pygame.sprite.spritecollide(bullet, self.bad_block_list, True)
+                for block in bullet_block_hit_list:
+                    self.bullet_list.remove(bullet)
+                    self.all_sprites_list.remove(bullet)
+                if bullet.rect.y < -10:
+                    self.bullet_list.remove(bullet)
+                    self.all_sprites_list.remove(bullet)
+
+
             # Check the list of collisions.
             for block in blocks_hit_list:
                 self.score += 1
@@ -115,8 +139,10 @@ class Game():
                 #bad_block.play()
                 badblock_library.BadBlock.reset_pos(block)
 
-            if len(self.good_block_list) == 0 or self.score < -10:
+            if len(self.good_block_list) == 0 or self.score <= -10:
                 self.game_over = True
+
+            
 
     def display_frame(self, screen):
 
