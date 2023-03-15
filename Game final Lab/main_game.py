@@ -10,6 +10,8 @@ def main():
     pygame.init()
  
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+    #pygame.display.get_desktop_sizes()
+    #screen = pygame.display.set_mode()
 
     # Loop until the user clicks the close button.
     done = False

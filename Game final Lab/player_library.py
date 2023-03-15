@@ -40,16 +40,16 @@ class Player(pygame.sprite.Sprite):
 
         if self.rect.x > SCREEN_WIDTH - 15:
             self.rect.x -= 1
-            #bump.play()
+            BUMP.play()
         elif self.rect.x < 0:
             self.rect.x += 1
-            #bump.play()
+            BUMP.play()
         elif self.rect.y > SCREEN_HEIGHT-15:
             self.rect.y -= 1
-            #bump.play()
+            BUMP.play()
         elif self.rect.y < 0:
             self.rect.y += 1
-            #bump.play()
+            BUMP.play()
         else:
             self.rect.x += self.change_x
             self.rect.y += self.change_y

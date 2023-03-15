@@ -11,11 +11,23 @@ BLUE  = (  0,   0, 255)
 GREEN = (  0, 255,   0)
 
 # Set the height and width of the screen
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-#music
-BACKGROUND_MUSIC = pygame.mixer.music.load(os.path.join("music", "a_block_in_space.wav"))
+#music and sounds
+BACKGROUND_MUSIC = []
+BACKGROUND_MUSIC.append(pygame.mixer.music.load(os.path.join("music", "a_block_in_space.ogg")))
+BACKGROUND_MUSIC.append(pygame.mixer.music.load(os.path.join("music", "through space.ogg")))
+
+BAD = pygame.mixer.Sound(os.path.join("music", "bad_block.ogg"))
+GOOD = pygame.mixer.Sound(os.path.join("music", "good_block.ogg"))
+BUMP = pygame.mixer.Sound(os.path.join("music", "bump.ogg"))
+
+LASER = []
+LASER.append(pygame.mixer.Sound(os.path.join("music", "laserSmall_001.ogg")))
+LASER.append(pygame.mixer.Sound(os.path.join("music", "laserLarge_001.ogg")))
+
     # pygame.mixer.music.set_volume(0.3)
     # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
     # pygame.mixer.music.play() 
