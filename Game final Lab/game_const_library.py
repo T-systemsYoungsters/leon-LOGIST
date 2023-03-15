@@ -25,7 +25,7 @@ for i in range(11):
 #backgrounds
 BACKGROUND_LIST = []
 BACKGROUND_IMAGE_MENU = pygame.image.load(os.path.join("resources", "Background-1.png"))
-# BACKGROUND_IMAGE_1 = pygame.image.load(os.path.join("resources", "Background-2.png"))
+BACKGROUND_IMAGE_1 = pygame.image.load(os.path.join("resources", "Background-2.png"))
 # BACKGROUND_IMAGE_2 = pygame.image.load(os.path.join("resources", "Background-3.png"))
 # BACKGROUND_IMAGE_3 = pygame.image.load(os.path.join("resources", "Background-4.png"))
 # BACKGROUND_IMAGE_4 = pygame.image.load(os.path.join("resources", "Background-5.jpg"))

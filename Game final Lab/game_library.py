@@ -22,14 +22,16 @@ class Game():
     all_sprites_list = None
     player = None
     enemy = 0
-    game_over = False
+    #game_over = False
+    game_state = 0  #(0:Startscreen, 1:Play, 9:Game Over)
     health_bar = 10
     score = 0
 
     def __init__(self):
         health_bar = 10
         self.score = 0
-        self.game_over = False
+        #self.game_over = False
+        self.game_state = 0
         # This is a list of 'sprites.' Each block in the program is
     # added to this list. The list is managed by a class called 'Group.'
         self.bad_block_list = pygame.sprite.Group()
@@ -81,8 +83,11 @@ class Game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
-            if self.game_over and event.type == pygame.MOUSEBUTTONDOWN:
+            if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.__init__()
+                self.health_bar = 10
+            elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN:
+                self.game_state = 1
             #background music
             # elif event.type == pygame.constants.USEREVENT:
             #     pygame.mixer.music.load("a_block_in_space.wav")
@@ -121,7 +126,7 @@ class Game():
 
     def run_logic(self):
 
-        if not self.game_over:
+        if self.game_state == 1:
             self.all_sprites_list.update()
             # See if the player block has collided with anything.
             blocks_hit_list = pygame.sprite.spritecollide(
@@ -135,7 +140,7 @@ class Game():
                 if bullet.rect.y < -10:
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
-
+            
 
             # Check the list of collisions.
             for block in blocks_hit_list:
@@ -149,7 +154,7 @@ class Game():
                 self.player.health -= 5
                 self.health_bar -= 1
                 if self.player.health <= 0:
-                    self.game_over = True
+                    self.game_state = 9
                 #bad_block.play()
                 badblock_library.BadBlock.reset_pos(block)
 
@@ -162,18 +167,26 @@ class Game():
 
     def display_frame(self, screen):
 
-        screen.blit(BACKGROUND_IMAGE_MENU, [0,0])
+        
+        if self.game_state == 0:
+            screen.blit(BACKGROUND_IMAGE_MENU, [0,0])
+            game_menu_font = pygame.font.SysFont("serif", 25)
+            game_menu_text = game_menu_font.render(
+                "Leftclick to start the game", True, WHITE)
+            x = (SCREEN_WIDTH // 2) - (game_menu_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_menu_text.get_height() // 2)
+            screen.blit(game_menu_text, [x,y])
 
-        if self.game_over:
-
+        elif self.game_state == 9:
             game_over_font = pygame.font.SysFont("serif", 25)
             game_over_text = game_over_font.render(
-                "Game Over, click to restart", True, WHITE)
+                "Game Over \n leftclick to get back to the menu", True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2)
             screen.blit(game_over_text, [x,y])
 
-        if not self.game_over:
+        elif self.game_state == 1:
+            screen.blit(BACKGROUND_IMAGE_1, [0,0])
             self.all_sprites_list.draw(screen)
             font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
             text_health = font.render("Health: " +str(self.player.health), True, WHITE)
