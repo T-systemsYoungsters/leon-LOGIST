@@ -7,6 +7,7 @@ from game_const_library import *
 import player_library
 import enemy_ships_library
 import os
+import time
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #good_block = pygame.mixer.Sound("good_block.wav")
@@ -155,15 +156,18 @@ class Game():
             for block in blocks_hit_list:
                 self.score -= 1
                 self.health_bar -= 1
+                
                 self.player.health -= 5
                 
                 if self.player.health <= 0:
+                    self.health_bar = 0
                     self.game_state = 9
                 #bad_block.play()
                 badblock_library.BadBlock.reset_pos(block)
 
 
             if len(self.good_block_list) == 0 or self.score <= -10:
+                
                 self.game_over = True
             
             
@@ -174,6 +178,8 @@ class Game():
 
         
         if self.game_state == 0:
+
+            
             screen.blit(BACKGROUND_LIST[0], [0,0])
             game_menu_font = pygame.font.SysFont("serif", 25)
             game_menu_text = game_menu_font.render(
@@ -183,6 +189,9 @@ class Game():
             screen.blit(game_menu_text, [x,y])
 
         elif self.game_state == 9:
+            self.health_bar=0
+            screen.blit(HEALTH[self.health_bar], [self.player.rect.x, self.player.rect.y - 4])
+            time.sleep(1)
             screen.blit(BACKGROUND_LIST[9], [0,0])
             game_over_font = pygame.font.SysFont("serif", 25)
             game_over_text = game_over_font.render(
