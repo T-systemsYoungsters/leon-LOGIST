@@ -154,8 +154,9 @@ class Game():
                 self.player, self.bad_block_list, False)
             for block in blocks_hit_list:
                 self.score -= 1
-                self.player.health -= 5
                 self.health_bar -= 1
+                self.player.health -= 5
+                
                 if self.player.health <= 0:
                     self.game_state = 9
                 #bad_block.play()
