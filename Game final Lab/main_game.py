@@ -17,10 +17,7 @@ def main():
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
 
-    #pygame.mixer.music.load("a_block_in_space.wav")
-    # pygame.mixer.music.set_volume(0.3)
-    # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-    # pygame.mixer.music.play() 
+    
     game = game_library.Game()
 
 # -------- Main Program Loop -----------

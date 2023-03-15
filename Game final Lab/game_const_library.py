@@ -15,7 +15,10 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
 #music
-
+BACKGROUND_MUSIC = pygame.mixer.music.load(os.path.join("music", "a_block_in_space.wav"))
+    # pygame.mixer.music.set_volume(0.3)
+    # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+    # pygame.mixer.music.play() 
 #health
 HEALTH = []
 for i in range(11):
@@ -24,17 +27,14 @@ for i in range(11):
    
 #backgrounds
 BACKGROUND_LIST = []
-BACKGROUND_IMAGE_MENU = pygame.image.load(os.path.join("resources", "Background-1.png"))
-BACKGROUND_IMAGE_1 = pygame.image.load(os.path.join("resources", "Background-2.png"))
-# BACKGROUND_IMAGE_2 = pygame.image.load(os.path.join("resources", "Background-3.png"))
-# BACKGROUND_IMAGE_3 = pygame.image.load(os.path.join("resources", "Background-4.png"))
-# BACKGROUND_IMAGE_4 = pygame.image.load(os.path.join("resources", "Background-5.jpg"))
-# BACKGROUND_IMAGE_5 = pygame.image.load(os.path.join("resources", "Background-6.jpg")) 
-# BACKGROUND_IMAGE_6 = pygame.image.load(os.path.join("resources", "Background-7.jpg"))
-# BACKGROUND_IMAGE_7 = pygame.image.load(os.path.join("resources", "Background-8.jpg"))
-# BACKGROUND_IMAGE_8 = pygame.image.load(os.path.join("resources", "Background-9.jpg"))
-# BACKGROUND_IMAGE_9 = pygame.image.load(os.path.join("resources", "Background-10.jpg"))
-# BACKGROUND_IMAGE_10 = pygame.image.load(os.path.join("resources", "Background-11.png"))
+for i in range(1,5):
+    background = pygame.image.load(os.path.join("resources", f"Background-{i} (1).png"))
+    BACKGROUND_LIST.append(background)
+for i in range(5,11):
+    background = pygame.image.load(os.path.join("resources", f"Background-{i} (1).jpg"))
+    BACKGROUND_LIST.append(background)
+
+
 
 #bullet
 BULLET = pygame.image.load(os.path.join("resources", "bullet_top.png"))

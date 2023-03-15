@@ -129,21 +129,24 @@ class Game():
         if self.game_state == 1:
             self.all_sprites_list.update()
             # See if the player block has collided with anything.
-            blocks_hit_list = pygame.sprite.spritecollide(
-                self.player, self.good_block_list, True)
+            
 
             for bullet in self.bullet_list:
-                bullet_block_hit_list = pygame.sprite.spritecollide(bullet, self.bad_block_list, True)
+                bullet_block_hit_list = pygame.sprite.spritecollide(bullet, self.bad_block_list, False)
+                #pygame.sprite.spritecollide(sprite, group, dokill)
                 for block in bullet_block_hit_list:
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
+                    badblock_library.BadBlock.reset_pos(block)
                 if bullet.rect.y < -10:
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
-            
+                
 
+            good_blocks_hit_list = pygame.sprite.spritecollide(
+                self.player, self.good_block_list, True)
             # Check the list of collisions.
-            for block in blocks_hit_list:
+            for block in good_blocks_hit_list:
                 self.score += 1
                 #good_block.play()
 
@@ -158,6 +161,7 @@ class Game():
                 #bad_block.play()
                 badblock_library.BadBlock.reset_pos(block)
 
+
             if len(self.good_block_list) == 0 or self.score <= -10:
                 self.game_over = True
             
@@ -169,7 +173,7 @@ class Game():
 
         
         if self.game_state == 0:
-            screen.blit(BACKGROUND_IMAGE_MENU, [0,0])
+            screen.blit(BACKGROUND_LIST[0], [0,0])
             game_menu_font = pygame.font.SysFont("serif", 25)
             game_menu_text = game_menu_font.render(
                 "Leftclick to start the game", True, WHITE)
@@ -178,6 +182,7 @@ class Game():
             screen.blit(game_menu_text, [x,y])
 
         elif self.game_state == 9:
+            screen.blit(BACKGROUND_LIST[9], [0,0])
             game_over_font = pygame.font.SysFont("serif", 25)
             game_over_text = game_over_font.render(
                 "Game Over \n leftclick to get back to the menu", True, WHITE)
@@ -186,7 +191,7 @@ class Game():
             screen.blit(game_over_text, [x,y])
 
         elif self.game_state == 1:
-            screen.blit(BACKGROUND_IMAGE_1, [0,0])
+            screen.blit(BACKGROUND_LIST[1], [0,0])
             self.all_sprites_list.draw(screen)
             font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
             text_health = font.render("Health: " +str(self.player.health), True, WHITE)
