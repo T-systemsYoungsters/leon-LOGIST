@@ -25,7 +25,7 @@ class Game():
     enemy = 0
     flag = 0
     #game_over = False
-    game_state = 0  # (0:Startscreen, 1:Play, 9:Game Over)
+    game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
     mouse_pos = []
@@ -96,14 +96,11 @@ class Game():
                 self.health_bar = 10
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x<SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
-            # #background music
-            # if self.game_state == 1 and event.type == pygame.constants.USEREVENT:
-            #         BACKGROUND_MUSIC[0]
-            #         pygame.mixer.music.play()
-            #     #Set the speed based on the key pressed
-            #SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50
-            # pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50])
-
+           
+            #elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
+            #    self.game_state = new level
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.game_state == 8:
+                self.game_state = 0 #main menu
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullet = bullet_library.Bullet(BULLET)
@@ -164,6 +161,7 @@ class Game():
             for block in good_blocks_hit_list:
                 self.score += 1
                 GOOD.play()
+                self.good_block_list.remove(block)
 
             blocks_hit_list = pygame.sprite.spritecollide(
                 self.player, self.bad_block_list, False)
@@ -176,16 +174,15 @@ class Game():
 
                 badblock_library.BadBlock.reset_pos(block)
 
-            if len(self.good_block_list) == 0 or self.score <= -10:
-
-                self.game_over = True
+            if self.score == 50:
+                self.flag = 2
+                
 
     def display_frame(self, screen):
 
         if self.game_state == 0:
 
             screen.blit(BACKGROUND_LIST[0], [0, 0])
-            screen.blit(SPACESTATION_128[0], [40,40])
             pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50])
             pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50],4)
             pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+10,200,50])
@@ -213,15 +210,6 @@ class Game():
             y = (SCREEN_HEIGHT // 2) - (game_menu_ships.get_height() // 2)
             screen.blit(game_menu_ships, [x, y+95])
 
-        elif self.game_state == 9:
-            time.sleep(1)
-            screen.blit(BACKGROUND_LIST[9], [0, 0])
-            game_over_text = game_titel_font.render(
-                "Game Over \n leftclick to get back to the menu", True, WHITE)
-            x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
-            y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2)
-            screen.blit(game_over_text, [x, y])
-
         elif self.game_state == 1:
             screen.blit(BACKGROUND_LIST[1], [0, 0])
             
@@ -233,9 +221,33 @@ class Game():
                 screen.blit(HEALTH[0], [
                         self.player.rect.x, self.player.rect.y - 4])
                 self.game_state = 9
-            else :
+            
+            else:
+                if self.flag == 2:
+                    self.game_state = 8
                 screen.blit(HEALTH[self.health_bar], [
                         self.player.rect.x, self.player.rect.y - 4])
             
+        elif self.game_state == 8:
+            time.sleep(1)
+            game_instruction_text = game_titel_font.render("Press ESC to get back to Menu", True, (47,79,79))
+            game_instruction_text_1 = game_titel_font.render("(Coming Soon:)Press SPACE to go to the next Level", True, (47,79,79))
+            game_won_text = game_titel_font.render("You Won!", True, (47,79,79))
+            x = (SCREEN_WIDTH // 2) - (game_won_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_won_text.get_height() // 2)
+            screen.blit(game_won_text, [x,y])
+            screen.blit(game_instruction_text, [(SCREEN_WIDTH//2)-(game_instruction_text.get_width()//2),(SCREEN_HEIGHT//2)-(game_instruction_text.get_height()//2)+60])
+            screen.blit(game_instruction_text_1, [(SCREEN_WIDTH//2)-(game_instruction_text_1.get_width()//2),120+(SCREEN_HEIGHT//2)-(game_instruction_text.get_height()//2)])
+
+        elif self.game_state == 9:
+            time.sleep(1)
+            screen.blit(BACKGROUND_LIST[9], [0, 0])
+            game_over_text = game_titel_font.render(
+                "Game Over \n leftclick to get back to the menu", True, WHITE)
+            x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2)
+            screen.blit(game_over_text, [x, y])
+
+        
                 
         pygame.display.flip()
