@@ -22,7 +22,6 @@ class Game():
     bullet_list = None
     enemy_list = None
     all_sprites_list = None
-    player = None
     enemy = 0
     #level2
     block_list_1 = None
@@ -31,11 +30,10 @@ class Game():
     bullet_list_1 = None
     enemy_list_1 = None
     all_sprites_list_1 = None
-    player_1 = None
     enemy_1 = 0
 
     flag = 0
-    
+    player = None
     game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
@@ -64,18 +62,18 @@ class Game():
         # bad blocks
         for i in range(20):
             # This represents a block
-            block = badblock_library.BadBlock(asteroid_one)
+            block = badblock_library.BadBlock(0,1, asteroid_one)
 
             # Set a random location for the block
             block.rect.x = random.randrange(SCREEN_WIDTH)
-            block.rect.y = random.randrange(SCREEN_HEIGHT)
+            block.rect.y = random.randrange(-200, 340)
 
             # Add the block to the list of objects
             self.bad_block_list.add(block)
             self.all_sprites_list.add(block)
 
         # good blocks
-        for i in range(50):
+        for i in range(30):
             # This represents a block
             block = goodblock_library.GoodBLock(gem)
 
@@ -88,16 +86,17 @@ class Game():
             self.all_sprites_list.add(block)
 
         for i in range(3):
-            enemy = enemy_ships_library.EnemyShips(ENEMY_SHIP_LIST[i])
-            enemy.rect.x = random.randrange(SCREEN_WIDTH)
+            enemy = enemy_ships_library.EnemyShips(1,0,ENEMY_SHIP_LIST[i])
+            enemy.rect.x = SCREEN_WIDTH+random.randrange(80)
             enemy.rect.y = random.randrange(SCREEN_HEIGHT)
             self.all_sprites_list.add(enemy)
 
 
+        # Level 2
         self.bad_block_list_1 = pygame.sprite.Group()
         self.good_block_list_1 = pygame.sprite.Group()
         self.enemy_list_1 = pygame.sprite.Group()
-        self.bullet_list_1 = pygame.sprite.Group()
+        
         # This is a list of every sprite.
         # All blocks and the player block as well.
         self.all_sprites_list_1 = pygame.sprite.Group()    
@@ -105,15 +104,15 @@ class Game():
         # bad blocks
         for i in range(20):
             # This represents a block
-            block = badblock_library.BadBlock(asteroid_one)
+            block = badblock_library.BadBlock(0,1,asteroid_one)
 
             # Set a random location for the block
-            block.rect.x = random.randrange(SCREEN_WIDTH)
+            block.rect.x = random.randrange(200)
             block.rect.y = random.randrange(SCREEN_HEIGHT)
 
             # Add the block to the list of objects
-            self.bad_block_list.add(block)
-            self.all_sprites_list.add(block)
+            self.bad_block_list_1.add(block)
+            self.all_sprites_list_1.add(block)
 
         # good blocks
         for i in range(50):
@@ -125,18 +124,20 @@ class Game():
             block.rect.y = random.randrange(SCREEN_HEIGHT-15)
 
             # Add the block to the list of objects
-            self.good_block_list.add(block)
-            self.all_sprites_list.add(block)
+            self.good_block_list_1.add(block)
+            self.all_sprites_list_1.add(block)
 
-        for i in range(3):
-            enemy = enemy_ships_library.EnemyShips(ENEMY_SHIP_LIST[i])
-            enemy.rect.x = random.randrange(SCREEN_WIDTH)
+        for i in range(4,8):
+            enemy = enemy_ships_library.EnemyShips(-1,0,pygame.transform.rotate(ENEMY_SHIP_LIST[i], 90))
+            enemy.rect.x = SCREEN_WIDTH+80
             enemy.rect.y = random.randrange(SCREEN_HEIGHT)
-            self.all_sprites_list.add(enemy)
+            self.all_sprites_list_1.add(enemy)
         
         # Create a  player block
+        
         self.player = player_library.Player(PLAYER_SHIP_1)
         self.all_sprites_list.add(self.player)
+        self.all_sprites_list_1.add(self.player)
 
     def process_events(self):
 
@@ -146,11 +147,15 @@ class Game():
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.__init__()
                 self.health_bar = 10
+                
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x<SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
            
-            #elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
-            #    self.game_state = new level
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
+                self.game_state = 2 #level2
+                self.health_bar = 10
+                self.flag = 0
+                self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 360)
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.game_state == 8:
                 self.game_state = 0 #main menu
 
@@ -159,7 +164,10 @@ class Game():
                 bullet.rect.x = self.player.rect.x
                 bullet.rect.y = self.player.rect.y
                 LASER[0].play()
-                self.all_sprites_list.add(bullet)
+                if self.game_state == 1:
+                    self.all_sprites_list.add(bullet)
+                elif self.game_state == 2:
+                    self.all_sprites_list_1            
                 self.bullet_list.add(bullet)
 
             elif event.type == pygame.KEYDOWN:
@@ -228,6 +236,44 @@ class Game():
 
             if len(self.good_block_list) == 0:
                 self.flag = 2
+
+        if self.game_state == 2:
+            self.all_sprites_list_1.update()
+            # See if the player block has collided with anything.
+
+            for bullet in self.bullet_list:
+                bullet_block_hit_list = pygame.sprite.spritecollide(
+                    bullet, self.bad_block_list_1, False)
+                #pygame.sprite.spritecollide(sprite, group, dokill)
+                for block in bullet_block_hit_list:
+                    self.bullet_list.remove(bullet)
+                    self.all_sprites_list_1.remove(bullet)
+                    badblock_library.BadBlock.reset_pos(block)
+                if bullet.rect.y < -10:
+                    self.bullet_list.remove(bullet)
+                    self.all_sprites_list_1.remove(bullet)
+
+            good_blocks_hit_list = pygame.sprite.spritecollide(
+                self.player, self.good_block_list_1, True)
+            # Check the list of collisions.
+            for block in good_blocks_hit_list:
+                self.score += 1
+                GOOD.play()
+                self.good_block_list_1.remove(block)
+
+            blocks_hit_list = pygame.sprite.spritecollide(
+                self.player, self.bad_block_list_1, False)
+            for block in blocks_hit_list:
+                self.health_bar -= 1
+                BAD.play()
+
+                if self.health_bar <= 0:
+                    self.flag = 1
+
+                badblock_library.BadBlock.reset_pos(block)
+
+            if len(self.good_block_list_1) == 0:
+                self.flag = 2
                 
 
     def display_frame(self, screen):
@@ -266,6 +312,24 @@ class Game():
             screen.blit(BACKGROUND_LIST[1], [0, 0])
             
             self.all_sprites_list.draw(screen)
+            font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
+            text_score = font.render("Score: " + str(self.score), True, WHITE)
+            screen.blit(text_score, [5, 5])
+            if self.flag == 1:
+                screen.blit(HEALTH[0], [
+                        self.player.rect.x, self.player.rect.y - 4])
+                self.game_state = 9
+            
+            else:
+                if self.flag == 2:
+                    self.game_state = 8
+                screen.blit(HEALTH[self.health_bar], [
+                        self.player.rect.x, self.player.rect.y - 4])
+
+        elif self.game_state == 2:
+            screen.blit(BACKGROUND_LIST[2], [0, 0])
+            
+            self.all_sprites_list_1.draw(screen)
             font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
             text_score = font.render("Score: " + str(self.score), True, WHITE)
             screen.blit(text_score, [5, 5])

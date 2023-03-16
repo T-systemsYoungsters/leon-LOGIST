@@ -2,8 +2,8 @@ import block_library
 import random
 
 class BadBlock(block_library.Block):
-    def __init__(self, x,y):
-        super.__init__()
+    def __init__(self, x,y, object):
+        block_library.Block.__init__(self, object)
         self.x = x
         self.y = y
     def reset_pos(self):

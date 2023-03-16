@@ -28,7 +28,7 @@ def main():
 
         game.display_frame(screen)
     
-        # Limit to 60 frames per second
+        # Limit to 60 frames per secondw
         clock.tick(60)
     
     pygame.quit()
