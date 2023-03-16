@@ -71,7 +71,7 @@ PLAYER_SHIP_1 = pygame.image.load(os.path.join("resources","blueships1.png" ))
 
 #enemy-ships
 ENEMY_SHIP_LIST = []
-for i in range(3):
+for i in range(17):
     ship = pygame.image.load(os.path.join("resources", f"EnemyShip_{i}.png"))
     ENEMY_SHIP_LIST.append(ship)
 #effects_ships

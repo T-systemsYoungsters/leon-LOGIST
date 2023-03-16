@@ -15,6 +15,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Game():
+    #level1
     block_list = None
     bad_block_list = None
     good_block_list = None
@@ -23,8 +24,18 @@ class Game():
     all_sprites_list = None
     player = None
     enemy = 0
+    #level2
+    block_list_1 = None
+    bad_block_list_1 = None
+    good_block_list_1 = None
+    bullet_list_1 = None
+    enemy_list_1 = None
+    all_sprites_list_1 = None
+    player_1 = None
+    enemy_1 = 0
+
     flag = 0
-    #game_over = False
+    
     game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
@@ -41,7 +52,7 @@ class Game():
         # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
         # pygame.mixer.music.play()
         # This is a list of 'sprites.' Each block in the program is
-    # added to this list. The list is managed by a class called 'Group.'
+        # added to this list. The list is managed by a class called 'Group.'
         self.bad_block_list = pygame.sprite.Group()
         self.good_block_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
@@ -82,7 +93,48 @@ class Game():
             enemy.rect.y = random.randrange(SCREEN_HEIGHT)
             self.all_sprites_list.add(enemy)
 
-        # Create a BLUE player block
+
+        self.bad_block_list_1 = pygame.sprite.Group()
+        self.good_block_list_1 = pygame.sprite.Group()
+        self.enemy_list_1 = pygame.sprite.Group()
+        self.bullet_list_1 = pygame.sprite.Group()
+        # This is a list of every sprite.
+        # All blocks and the player block as well.
+        self.all_sprites_list_1 = pygame.sprite.Group()    
+        
+        # bad blocks
+        for i in range(20):
+            # This represents a block
+            block = badblock_library.BadBlock(asteroid_one)
+
+            # Set a random location for the block
+            block.rect.x = random.randrange(SCREEN_WIDTH)
+            block.rect.y = random.randrange(SCREEN_HEIGHT)
+
+            # Add the block to the list of objects
+            self.bad_block_list.add(block)
+            self.all_sprites_list.add(block)
+
+        # good blocks
+        for i in range(50):
+            # This represents a block
+            block = goodblock_library.GoodBLock(gem)
+
+            # Set a random location for the block
+            block.rect.x = random.randrange(SCREEN_WIDTH-20)
+            block.rect.y = random.randrange(SCREEN_HEIGHT-15)
+
+            # Add the block to the list of objects
+            self.good_block_list.add(block)
+            self.all_sprites_list.add(block)
+
+        for i in range(3):
+            enemy = enemy_ships_library.EnemyShips(ENEMY_SHIP_LIST[i])
+            enemy.rect.x = random.randrange(SCREEN_WIDTH)
+            enemy.rect.y = random.randrange(SCREEN_HEIGHT)
+            self.all_sprites_list.add(enemy)
+        
+        # Create a  player block
         self.player = player_library.Player(PLAYER_SHIP_1)
         self.all_sprites_list.add(self.player)
 
@@ -174,7 +226,7 @@ class Game():
 
                 badblock_library.BadBlock.reset_pos(block)
 
-            if self.score == 50:
+            if len(self.good_block_list) == 0:
                 self.flag = 2
                 
 
