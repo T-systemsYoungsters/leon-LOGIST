@@ -9,12 +9,18 @@ WHITE = (255, 255, 255)
 RED   = (255,   0,   0)
 BLUE  = (  0,   0, 255)
 GREEN = (  0, 255,   0)
+BUTTONS_COLOR = (119, 136, 153)
 
 # Set the height and width of the screen
+info = pygame.display.Info()
 
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 1280#info.current_w
+SCREEN_HEIGHT = 720#info.current_h
 
+
+#font
+game_menu_font = pygame.font.SysFont("serif", 25)
+game_titel_font = pygame.font.SysFont("serif", 35)
 #music and sounds
 BACKGROUND_MUSIC = []
 BACKGROUND_MUSIC.append(pygame.mixer.music.load(os.path.join("music", "a_block_in_space.ogg")))
@@ -46,8 +52,14 @@ for i in range(5,11):
     background = pygame.image.load(os.path.join("resources", f"Background-{i} (1).jpg"))
     BACKGROUND_LIST.append(background)
 
-
-
+#spacestations
+SPACESTATION_128 = []
+SPACESTATION_128.append(pygame.image.load(os.path.join("resources", "Spacestation_1_128.png")))
+# for i in range (1,6):
+#     SPACESTATION.append(pygame.image.load(os.path.join("resources", f"Spacestation_{i}_128.png")))
+# SPACESTATION_256 = []
+# for i in range(1,6):
+#     SPACESTATION_256.append(pygame.image.load(os.path.join("resources", f"Spacestation_{i}_256.png")))
 #bullet
 BULLET = pygame.image.load(os.path.join("resources", "bullet_top.png"))
 #ships

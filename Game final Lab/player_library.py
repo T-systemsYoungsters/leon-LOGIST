@@ -16,8 +16,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         #player stats:
-        self.health = 50
-        self.boost = 20
+        #self.boost = 20
         # Set height, width
         self.image = ship
         self.rect = self.image.get_rect() 

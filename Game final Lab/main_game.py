@@ -10,8 +10,6 @@ def main():
     pygame.init()
  
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    #pygame.display.get_desktop_sizes()
-    #screen = pygame.display.set_mode()
 
     # Loop until the user clicks the close button.
     done = False
@@ -19,7 +17,6 @@ def main():
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
 
-    
     game = game_library.Game()
 
 # -------- Main Program Loop -----------

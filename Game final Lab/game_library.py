@@ -23,16 +23,19 @@ class Game():
     all_sprites_list = None
     player = None
     enemy = 0
+    flag = 0
     #game_over = False
     game_state = 0  # (0:Startscreen, 1:Play, 9:Game Over)
     health_bar = 10
     score = 0
+    mouse_pos = []
 
     def __init__(self):
         self.health_bar = 10
         self.score = 0
         #self.game_over = False
         self.game_state = 0
+        self.flag = 0
 
         # BACKGROUND_MUSIC[0]
         # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
@@ -91,13 +94,16 @@ class Game():
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.__init__()
                 self.health_bar = 10
-            elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN:
+            elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x<SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
             # #background music
             # if self.game_state == 1 and event.type == pygame.constants.USEREVENT:
             #         BACKGROUND_MUSIC[0]
             #         pygame.mixer.music.play()
             #     #Set the speed based on the key pressed
+            #SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50
+            # pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50])
+
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 bullet = bullet_library.Bullet(BULLET)
@@ -127,10 +133,15 @@ class Game():
                     self.player.changespeed(0, 3)
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.player.changespeed(0, -3)
+            
+
         return False
 
     def run_logic(self):
-
+        if self.game_state == 0:
+            self.mouse_pos = pygame.mouse.get_pos()
+            self.mouse_x = self.mouse_pos[0]
+            self.mouse_y = self.mouse_pos[1]
         if self.game_state == 1:
             self.all_sprites_list.update()
             # See if the player block has collided with anything.
@@ -158,12 +169,10 @@ class Game():
                 self.player, self.bad_block_list, False)
             for block in blocks_hit_list:
                 self.health_bar -= 1
-                self.player.health -= 5
                 BAD.play()
 
-                if self.player.health <= 0:
-                    self.health_bar = 0
-                    self.game_state = 9
+                if self.health_bar <= 0:
+                    self.flag = 1
 
                 badblock_library.BadBlock.reset_pos(block)
 
@@ -176,19 +185,38 @@ class Game():
         if self.game_state == 0:
 
             screen.blit(BACKGROUND_LIST[0], [0, 0])
-            game_menu_font = pygame.font.SysFont("serif", 25)
-            game_menu_text = game_menu_font.render(
-                "Leftclick to start the game", True, WHITE)
-            x = (SCREEN_WIDTH // 2) - (game_menu_text.get_width() // 2)
-            y = (SCREEN_HEIGHT // 2) - (game_menu_text.get_height() // 2)
-            screen.blit(game_menu_text, [x, y])
+            screen.blit(SPACESTATION_128[0], [40,40])
+            pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50])
+            pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-50,200,50],4)
+            pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+10,200,50])
+            pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+10,200,50],4)
+            pygame.draw.rect(screen, BUTTONS_COLOR, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+70,200,50])
+            pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+70,200,50],4)
+            game_titel_text = game_titel_font.render(
+                "Spacegame", True, WHITE)
+            game_menu_play = game_menu_font.render(
+                "PLAY", True, WHITE)
+            game_menu_level = game_menu_font.render(
+                "LEVEL - COMING SOON", True, WHITE)
+            game_menu_ships = game_menu_font.render(
+                "SHIPS - COMING SOON", True, WHITE)
+            x = (SCREEN_WIDTH // 2) - (game_titel_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_titel_text.get_height() // 2)
+            screen.blit(game_titel_text, [x, y-150])
+            x = (SCREEN_WIDTH // 2) - (game_menu_play.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_menu_play.get_height() // 2)
+            screen.blit(game_menu_play, [x, y-25])
+            x = (SCREEN_WIDTH // 2) - (game_menu_level.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_menu_level.get_height() // 2)
+            screen.blit(game_menu_level, [x, y+35])
+            x = (SCREEN_WIDTH // 2) - (game_menu_ships.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_menu_ships.get_height() // 2)
+            screen.blit(game_menu_ships, [x, y+95])
 
         elif self.game_state == 9:
-
-            time.sleep(0.5)
+            time.sleep(1)
             screen.blit(BACKGROUND_LIST[9], [0, 0])
-            game_over_font = pygame.font.SysFont("serif", 25)
-            game_over_text = game_over_font.render(
+            game_over_text = game_titel_font.render(
                 "Game Over \n leftclick to get back to the menu", True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2)
@@ -196,12 +224,18 @@ class Game():
 
         elif self.game_state == 1:
             screen.blit(BACKGROUND_LIST[1], [0, 0])
+            
             self.all_sprites_list.draw(screen)
             font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
-            text_health = font.render(
-                "Health: " + str(self.player.health), True, WHITE)
             text_score = font.render("Score: " + str(self.score), True, WHITE)
             screen.blit(text_score, [5, 5])
-            screen.blit(HEALTH[self.health_bar], [
+            if self.flag == 1:
+                screen.blit(HEALTH[0], [
                         self.player.rect.x, self.player.rect.y - 4])
+                self.game_state = 9
+            else :
+                screen.blit(HEALTH[self.health_bar], [
+                        self.player.rect.x, self.player.rect.y - 4])
+            
+                
         pygame.display.flip()
