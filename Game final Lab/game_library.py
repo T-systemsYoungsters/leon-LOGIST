@@ -159,7 +159,7 @@ class Game():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.game_state == 8:
                 self.game_state = 0 #main menu
 
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and (self.game_state == 1 or self.game_state == 2):
                 bullet = bullet_library.Bullet(BULLET)
                 bullet.rect.x = self.player.rect.x
                 bullet.rect.y = self.player.rect.y
@@ -167,7 +167,7 @@ class Game():
                 if self.game_state == 1:
                     self.all_sprites_list.add(bullet)
                 elif self.game_state == 2:
-                    self.all_sprites_list_1            
+                    self.all_sprites_list_1.add(bullet)          
                 self.bullet_list.add(bullet)
 
             elif event.type == pygame.KEYDOWN:
