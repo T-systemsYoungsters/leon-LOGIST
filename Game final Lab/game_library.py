@@ -165,7 +165,7 @@ class Game():
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.game_state == 8:
                 self.game_state = 0  # main menu
 
-            elif event.type == pygame.MOUSEBUTTONDOWN and (self.game_state == 1 or self.game_state == 2):
+            elif event.type == pygame.MOUSEBUTTONDOWN and (self.game_state == 1 or self.game_state == 2) and (self.game_state == 1 or self.game_state == 2):
                 self.mouse_pos = pygame.mouse.get_pos()
                 self.mouse_x = self.mouse_pos[0]
                 self.mouse_y = self.mouse_pos[1]
@@ -175,7 +175,7 @@ class Game():
                 if self.game_state == 1:
                     self.all_sprites_list.add(bullet)
                 elif self.game_state == 2:
-                    self.all_sprites_list_1.add(bullet)
+                    self.all_sprites_list_1.add(bullet)          
                 self.bullet_list.add(bullet)
 
             elif event.type == pygame.KEYDOWN:
