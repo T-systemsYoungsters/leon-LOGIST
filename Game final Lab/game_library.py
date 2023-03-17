@@ -108,10 +108,10 @@ class Game():
         # bad blocks
         for i in range(20):
             # This represents a block
-            block = badblock_library.BadBlock(0, 1, asteroid_one)
+            block = badblock_library.BadBlock(1, 0, asteroid_one)
 
             # Set a random location for the block
-            block.rect.x = random.randrange(200)
+            block.rect.x = random.randrange(-200, 200)
             block.rect.y = random.randrange(SCREEN_HEIGHT)
 
             # Add the block to the list of objects
