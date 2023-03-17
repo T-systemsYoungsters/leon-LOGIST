@@ -175,7 +175,7 @@ class Game():
                 if self.game_state == 1:
                     self.all_sprites_list.add(bullet)
                 elif self.game_state == 2:
-                    self.all_sprites_list_1.add
+                    self.all_sprites_list_1.add(bullet)
                 self.bullet_list.add(bullet)
 
             elif event.type == pygame.KEYDOWN:
