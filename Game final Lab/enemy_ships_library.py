@@ -4,10 +4,10 @@ import random
 
 class EnemyShips(block_library.Block):
     count = 0
-    ranx = 0
-    rany = 1
+    health = 3
     def __init__(self, x,y, object):
         block_library.Block.__init__(self, object)
+        self.health = 3
         self.x = x
         self.y = y
 
@@ -15,4 +15,7 @@ class EnemyShips(block_library.Block):
 
         self.rect.x += self.x
         self.rect.y += self.y
+
+        if self.health <= 0:
+            self.kill()
     
