@@ -182,75 +182,38 @@ class Game():
 
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.player.changespeed(0, -3)
+                    self.player.image = PLAYER_SHIP_1
 
                 elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.player.changespeed(3, 0)
-                    if self.key_flag == 1:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 90)  # 90
-                    else:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 270)
-                    self.key_flag = 3
+                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 270)
+                    
 
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
 
                     self.player.changespeed(0, 3)
-
-                    if self.key_flag == 3:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 270)
-                    elif self.key_flag == 4:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 90)
-                    else:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 180)
-                    self.key_flag = 1
+                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 180)
 
                 elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.player.changespeed(-3, 0)
-                    if self.key_flag == 1:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 270)
-                    else:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 90)
-                    self.key_flag = 4
+                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 90)
+                    
 
             # Reset speed when key goes up
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.player.changespeed(3, 0)
-                    if self.key_flag == 4:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 270)
-                        self.key_flag = 0
-                    #     self.player.image = pygame.transform.rotate(self.player.image, 90)
-                    # else:
+                    
 
                 elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.player.changespeed(-3, 0)
-                    if self.key_flag == 3:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 90)
-                        self.key_flag = 0
-                    #     self.player.image = pygame.transform.rotate(self.player.image, 270)
-                    # else: self.player.image = pygame.transform.rotate(self.player.image, 90)
 
                 elif event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.player.changespeed(0, 3)
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     self.player.changespeed(0, -3)
-                    if self.key_flag == 1:
-                        self.player.image = pygame.transform.rotate(
-                            self.player.image, 180)
-                        self.key_flag = 0
-                    # if self.key_flag == 3:
-                    #     self.player.image = pygame.transform.rotate(self.player.image, 90)
-                    # elif self.key_flag == 4:
-                    #     self.player.image = pygame.transform.rotate(self.player.image, 90)
-                    # else: self.player.image = pygame.transform.rotate(self.player.image, 180)
+                    
+                   
 
         return False
 
@@ -261,16 +224,7 @@ class Game():
             self.mouse_y = self.mouse_pos[1]
         if self.game_state == 1:
             self.all_sprites_list.update()
-            # See if the player block has collided with anything.
-
-            # if self.tick == 48:
-            #     x = self.enemy_list[0].rect.x
-            #     y = self.enemy_list[0].rext.y
-            #     bullet = bullet_library.Bullet(BULLET, x, y, x, SCREEN_HEIGHT)
-            #     LASER[1].play()
-            #     self.all_sprites_list.add(bullet)
-            #     self.bullet_list.add(bullet)
-            # self.tick += 1
+            
 
             for bullet in self.bullet_list:
                 bullet_block_hit_list = pygame.sprite.spritecollide(
@@ -285,8 +239,6 @@ class Game():
                     self.all_sprites_list.remove(bullet)
 
                 
-                        
-
 
             good_blocks_hit_list = pygame.sprite.spritecollide(
                 self.player, self.good_block_list, True)
