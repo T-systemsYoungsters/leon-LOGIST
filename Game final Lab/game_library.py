@@ -111,7 +111,7 @@ class Game():
             block = badblock_library.BadBlock(1, 0, asteroid_one)
 
             # Set a random location for the block
-            block.rect.x = random.randrange(-200, 200)
+            block.rect.x = random.randrange(-400, 200)
             block.rect.y = random.randrange(SCREEN_HEIGHT)
 
             # Add the block to the list of objects
@@ -226,7 +226,7 @@ class Game():
             self.all_sprites_list.update()
             # See if the player block has collided with anything.
 
-            if self.tick == 48:
+            if self.tick == 120:
                 self.tick = 0
                 for ship in self.enemy_list:
                     x = ship.rect.x
@@ -245,10 +245,18 @@ class Game():
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
                     badblock_library.BadBlock.reset_pos(block)
+                # bullet_ship_hit_list = pygame.sprite.spritecollide(self.player, bullet, True)
+                # for hit in bullet_ship_hit_list:
+                #     self.player.health_bar -= 2
+                #     self.bullet_list.remove(bullet)
+                #     self.all_sprites_list.remove(bullet)
+                #     if self.health_bar <= 0:
+                #         self.flag = 1
                 if bullet.rect.y < -10:
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
 
+            
                 
 
             good_blocks_hit_list = pygame.sprite.spritecollide(
@@ -297,16 +305,17 @@ class Game():
                 GOOD.play()
                 self.good_block_list_1.remove(block)
 
-            blocks_hit_list = pygame.sprite.spritecollide(
+            blocks_hit_list1 = pygame.sprite.spritecollide(
                 self.player, self.bad_block_list_1, False)
-            for block in blocks_hit_list:
+            for block1 in blocks_hit_list1:
+                badblock_library.BadBlock.reset_pos(block1)
                 self.health_bar -= 1
                 BAD.play()
 
                 if self.health_bar <= 0:
                     self.flag = 1
 
-                badblock_library.BadBlock.reset_pos(block)
+            
 
             if len(self.good_block_list_1) == 0:
                 self.flag = 2
