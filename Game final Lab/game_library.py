@@ -42,6 +42,7 @@ class Game():
     flag = 0
     player = None
     player_ship = None
+    bullet_image = None
     game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
@@ -168,6 +169,8 @@ class Game():
         self.all_sprites_list_1.add(self.player)
         self.all_sprites_list_2.add(self.player)
 
+        self.bullet_image = BULLET_LIST[0]
+
     def process_events(self):
 
         for event in pygame.event.get():
@@ -188,21 +191,26 @@ class Game():
                     self.game_state = 0
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 328 and self.mouse_x > 232 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[0]
+                    self.bullet_image = BULLET_LIST[0]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 456 and self.mouse_x > 360 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[1]
+                    self.bullet_image = BULLET_LIST[1]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 584 and self.mouse_x > 488 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[2]
+                    self.bullet_image = BULLET_LIST[2]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 712 and self.mouse_x > 616 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[3]
+                    self.bullet_image = BULLET_LIST[3]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 840 and self.mouse_x > 744 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[4]
+                    bullet_image = BULLET_LIST[4]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 968 and self.mouse_x > 872 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[5]
+                    self.bullet_image = BULLET_LIST[5]
                     SELECT.play()
                 self.player.image = self.player_ship
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
@@ -231,7 +239,7 @@ class Game():
                     self.mouse_x = self.mouse_pos[0]
                     self.mouse_y = self.mouse_pos[1]
                     bullet = bullet_library.Bullet(
-                        BULLET, self.player.rect.x, self.player.rect.y, self.mouse_x, self.mouse_y)
+                        self.bullet_image, self.player.rect.x, self.player.rect.y, self.mouse_x, self.mouse_y)
                     LASER[0].play()
                     self.player.ammo -= 1
                     if self.game_state == 1:

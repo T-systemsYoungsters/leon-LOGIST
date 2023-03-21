@@ -56,7 +56,10 @@ for i in range(5,11):
     BACKGROUND_LIST.append(background)
 
 #bullet
-BULLET = pygame.image.load(os.path.join("resources", "15.png"))
+BULLET_LIST = []
+for i in range(12,19):
+    BULLET = pygame.image.load(os.path.join("resources", f"{i}.png"))
+    BULLET_LIST.append(BULLET)
 
 #player-ships
 PLAYER_SHIP_LIST = []
