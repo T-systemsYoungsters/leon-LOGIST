@@ -86,7 +86,7 @@ class Game():
             self.all_sprites_list.add(block)
 
         # good blocks
-        for i in range(30):
+        for i in range(60):
             # This represents a block
             block = goodblock_library.GoodBLock(gem)
 
@@ -142,20 +142,20 @@ class Game():
         self.all_sprites_list_2 = pygame.sprite.Group()
 
         # bad blocks
-        for i in range(30):
+        for i in range(25):
             # This represents a block
             block = badblock_library.BadBlock(-2, 2, asteroid_one)
 
             # Set a random location for the block
-            block.rect.x = random.randrange(SCREEN_WIDTH//2, SCREEN_WIDTH)
-            block.rect.y = random.randrange(-100, 350)
+            block.rect.x = random.randrange(SCREEN_WIDTH+450)
+            block.rect.y = random.randrange(-350, 350)
 
             # Add the block to the list of objects
             self.bad_block_list_2.add(block)
             self.all_sprites_list_2.add(block)
 
         # good blocks
-        for i in range(60):
+        for i in range(30):
             # This represents a block
             block = goodblock_library.GoodBLock(gem)
 
@@ -184,8 +184,8 @@ class Game():
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.__init__()
                 self.health_bar = 10
-                
-
+            elif self.game_state == 10 and even.type == pygame.MOUSEBUTTONDOWN: 
+                game_state = 0
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
 
