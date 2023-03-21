@@ -8,7 +8,10 @@ class BadBlock(block_library.Block):
         self.x = x
         self.y = y
     def reset_pos(self):
-        if self.x != 0:
+        if self.x < 0 and self.y > 0:
+            self.rect.x = random.randrange(SCREEN_WIDTH)
+            self.rect.y = random.randrange(-40, 0)
+        elif self.x != 0:
             self.rect.x = random.randrange(-30, -19)
             self.rect.y = random.randrange(720-20)
         elif self.y != 0:

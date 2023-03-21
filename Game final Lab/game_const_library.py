@@ -19,6 +19,7 @@ SCREEN_HEIGHT = 720#info.current_h
 
 
 #font
+font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
 game_menu_font = pygame.font.SysFont("serif", 25)
 game_titel_font = pygame.font.SysFont("serif", 35)
 #music and sounds
@@ -29,6 +30,7 @@ BACKGROUND_MUSIC.append(pygame.mixer.music.load(os.path.join("music", "through s
 BAD = pygame.mixer.Sound(os.path.join("music", "bad_block.ogg"))
 GOOD = pygame.mixer.Sound(os.path.join("music", "good_block.ogg"))
 BUMP = pygame.mixer.Sound(os.path.join("music", "bump.ogg"))
+EMPTY = pygame.mixer.Sound(os.path.join("music", "empty_mag.ogg"))
 
 LASER = []
 LASER.append(pygame.mixer.Sound(os.path.join("music", "laserSmall_001.ogg")))

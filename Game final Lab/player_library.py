@@ -8,13 +8,14 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 class Player(pygame.sprite.Sprite):
     """ The class is the player-controlled sprite. """
- 
+    ammo = 0
     # -- Methods
-    def __init__(self, ship):
+    def __init__(self, ship, a):
         """Constructor function"""
         # Call the parent's constructor
         super().__init__()
 
+        self.ammo = a
         #player stats:
         #self.boost = 20
         # Set height, width
