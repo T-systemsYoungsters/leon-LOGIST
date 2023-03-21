@@ -305,16 +305,22 @@ class Game():
                     bullet, self.bad_block_list, False)
                 #pygame.sprite.spritecollide(sprite, group, dokill)
                 for block in bullet_block_hit_list:
+                    if random.randrange(20) == 1:
+                        good_block = goodblock_library.GoodBLock(gem)
+                        # Set a  location for the block
+                        good_block.rect.x = bullet.rect.x
+                        good_block.rect.y = bullet.rect.y
+                        # Add the block to the list of objects
+                        self.good_block_list.add(good_block)
+                        self.all_sprites_list.add(good_block)
+
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
                     badblock_library.BadBlock.reset_pos(block)
 
                 if bullet.rect.y < -10:
                     self.bullet_list.remove(bullet)
-                    self.all_sprites_list.remove(bullet)
-
-            
-                
+                    self.all_sprites_list.remove(bullet)           
 
             good_blocks_hit_list = pygame.sprite.spritecollide(
                 self.player, self.good_block_list, True)
@@ -346,6 +352,14 @@ class Game():
                     bullet, self.bad_block_list_1, False)
                 #pygame.sprite.spritecollide(sprite, group, dokill)
                 for block in bullet_block_hit_list:
+                    if random.randrange(15) == 1:
+                        good_block = goodblock_library.GoodBLock(gem)
+                        # Set a  location for the block
+                        good_block.rect.x = bullet.rect.x
+                        good_block.rect.y = bullet.rect.y
+                        # Add the block to the list of objects
+                        self.good_block_list_1.add(good_block)
+                        self.all_sprites_list_1.add(good_block)
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list_1.remove(bullet)
                     badblock_library.BadBlock.reset_pos(block)
@@ -385,6 +399,14 @@ class Game():
                     bullet, self.bad_block_list_2, False)
                 #pygame.sprite.spritecollide(sprite, group, dokill)
                 for block in bullet_block_hit_list:
+                    if random.randrange(10) == 1:
+                        good_block = goodblock_library.GoodBLock(gem)
+                        # Set a  location for the block
+                        good_block.rect.x = bullet.rect.x
+                        good_block.rect.y = bullet.rect.y
+                        # Add the block to the list of objects
+                        self.good_block_list_2.add(good_block)
+                        self.all_sprites_list_2.add(good_block)
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list_2.remove(bullet)
                     badblock_library.BadBlock.reset_pos(block)
