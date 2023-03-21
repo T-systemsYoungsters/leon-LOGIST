@@ -31,6 +31,7 @@ BAD = pygame.mixer.Sound(os.path.join("music", "bad_block.ogg"))
 GOOD = pygame.mixer.Sound(os.path.join("music", "good_block.ogg"))
 BUMP = pygame.mixer.Sound(os.path.join("music", "bump.ogg"))
 EMPTY = pygame.mixer.Sound(os.path.join("music", "empty_mag.ogg"))
+SELECT = pygame.mixer.Sound(os.path.join("music", "select01.ogg"))
 
 LASER = []
 LASER.append(pygame.mixer.Sound(os.path.join("music", "laserSmall_001.ogg")))
@@ -54,34 +55,15 @@ for i in range(5,11):
     background = pygame.image.load(os.path.join("resources", f"Background-{i} (1).jpg"))
     BACKGROUND_LIST.append(background)
 
-#spacestations
-SPACESTATION_128 = []
-SPACESTATION_128.append(pygame.image.load(os.path.join("resources", "Spacestation_1_128.png")))
-# for i in range (1,6):
-#     SPACESTATION.append(pygame.image.load(os.path.join("resources", f"Spacestation_{i}_128.png")))
-# SPACESTATION_256 = []
-# for i in range(1,6):
-#     SPACESTATION_256.append(pygame.image.load(os.path.join("resources", f"Spacestation_{i}_256.png")))
 #bullet
-BULLET = pygame.image.load(os.path.join("resources", "bullet_top.png"))
-#ships
+BULLET = pygame.image.load(os.path.join("resources", "15.png"))
+
 #player-ships
 PLAYER_SHIP_LIST = []
-PLAYER_SHIP_1 = pygame.image.load(os.path.join("resources","blueships1.png" ))
-
-#friendly_ships
-
-#enemy-ships
-ENEMY_SHIP_LIST = []
-for i in range(17):
-    ship = pygame.image.load(os.path.join("resources", f"EnemyShip_{i}.png"))
-    ENEMY_SHIP_LIST.append(ship)
-#effects_ships
-
-#icons
+for i in range(1,7):
+    ship = pygame.image.load(os.path.join("resources", f"ship1 ({i}).png"))
+    PLAYER_SHIP_LIST.append(ship)
 
 #objects
-#good_objects
-#bad_objects
 gem = pygame.image.load(os.path.join("resources", "gem-1.png"))
 asteroid_one = pygame.image.load(os.path.join("resources","asteroid.png"))

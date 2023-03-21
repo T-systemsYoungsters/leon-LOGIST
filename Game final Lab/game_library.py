@@ -41,6 +41,7 @@ class Game():
     key_flag = 0
     flag = 0
     player = None
+    player_ship = None
     game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
@@ -56,11 +57,7 @@ class Game():
         self.flag = 0
         #self.tick = 0
         self.key_flag = 0
-        # BACKGROUND_MUSIC[0]
-        # pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
-        # pygame.mixer.music.play()
-        # This is a list of 'sprites.' Each block in the program is
-        # added to this list. The list is managed by a class called 'Group.'
+
         self.bad_block_list = pygame.sprite.Group()
         self.good_block_list = pygame.sprite.Group()
         #self.enemy_list = pygame.sprite.Group()
@@ -94,13 +91,6 @@ class Game():
             # Add the block to the list of objects
             self.good_block_list.add(block)
             self.all_sprites_list.add(block)
-
-        # for i in range(3):
-        #     enemy = enemy_ships_library.EnemyShips(0, 1, ENEMY_SHIP_LIST[i])
-        #     enemy.rect.x = random.randrange(10, SCREEN_WIDTH-20)
-        #     enemy.rect.y = 0-random.randrange(80)
-        #     self.all_sprites_list.add(enemy)
-        #     self.enemy_list.add(enemy)
 
         # Level 2
         self.bad_block_list_1 = pygame.sprite.Group()
@@ -137,16 +127,6 @@ class Game():
             self.good_block_list_1.add(block)
             self.all_sprites_list_1.add(block)
 
-        # for i in range(4, 8):
-        #     enemy = enemy_ships_library.EnemyShips(
-        #         -1, 0, pygame.transform.rotate(ENEMY_SHIP_LIST[i], 90))
-        #     enemy.rect.x = SCREEN_WIDTH+80
-        #     enemy.rect.y = random.randrange(10, SCREEN_HEIGHT-20)
-        #     self.all_sprites_list_1.add(enemy)
-        #     self.enemy_list_1.add(enemy)
-
-        # Create a  player block
-
         self.bad_block_list_2 = pygame.sprite.Group()
         self.good_block_list_2 = pygame.sprite.Group()
         #self.enemy_list_1 = pygame.sprite.Group()
@@ -181,7 +161,9 @@ class Game():
             self.good_block_list_2.add(block)
             self.all_sprites_list_2.add(block)
 
-        self.player = player_library.Player(PLAYER_SHIP_1, 40)
+        # Create a  player block
+        self.player_ship = PLAYER_SHIP_LIST[0]
+        self.player = player_library.Player(self.player_ship, 40)
         self.all_sprites_list.add(self.player)
         self.all_sprites_list_1.add(self.player)
         self.all_sprites_list_2.add(self.player)
@@ -199,6 +181,30 @@ class Game():
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
 
+            elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2+10 and self.mouse_y < SCREEN_HEIGHT/2+200:
+                self.game_state = 0.1
+            elif self.game_state == 0.1:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    self.game_state = 0
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 328 and self.mouse_x > 232 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[0]
+                    SELECT.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 456 and self.mouse_x > 360 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[1]
+                    SELECT.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 584 and self.mouse_x > 488 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[2]
+                    SELECT.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 712 and self.mouse_x > 616 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[3]
+                    SELECT.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 840 and self.mouse_x > 744 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[4]
+                    SELECT.play()
+                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 968 and self.mouse_x > 872 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
+                    self.player_ship = PLAYER_SHIP_LIST[5]
+                    SELECT.play()
+                self.player.image = self.player_ship
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
                 self.game_state = 2  # level2
                 self.health_bar = 10
@@ -206,7 +212,7 @@ class Game():
                 self.player.ammo = 30
                 self.player.rect.x = SCREEN_WIDTH // 2
                 self.player.rect.y = SCREEN_HEIGHT // 2
-                self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 90)
+                self.player.image = pygame.transform.rotate(self.player_ship, 90)
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 7:
                 self.game_state = 3  # level3
                 self.health_bar = 10
@@ -214,7 +220,7 @@ class Game():
                 self.player.ammo = 20
                 self.player.rect.x = SCREEN_WIDTH // 2
                 self.player.rect.y = SCREEN_HEIGHT // 2
-                self.player.image = PLAYER_SHIP_1
+                self.player.image = self.player_ship
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.game_state == 8:
                 self.game_state = 0  # main menu
@@ -241,21 +247,21 @@ class Game():
 
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
                     self.player.changespeed(0, -3)
-                    self.player.image = PLAYER_SHIP_1
+                    self.player.image = self.player_ship
 
                 elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     self.player.changespeed(3, 0)
-                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 270)
+                    self.player.image = pygame.transform.rotate(self.player_ship, 270)
                     
 
                 elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
 
                     self.player.changespeed(0, 3)
-                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 180)
+                    self.player.image = pygame.transform.rotate(self.player_ship, 180)
 
                 elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     self.player.changespeed(-3, 0)
-                    self.player.image = pygame.transform.rotate(PLAYER_SHIP_1, 90)
+                    self.player.image = pygame.transform.rotate(self.player_ship, 90)
                     
 
             # Reset speed when key goes up
@@ -277,24 +283,14 @@ class Game():
         return False
 
     def run_logic(self):
-        if self.game_state == 0:
+        if self.game_state == 0 or self.game_state == 0.1:
             self.mouse_pos = pygame.mouse.get_pos()
             self.mouse_x = self.mouse_pos[0]
             self.mouse_y = self.mouse_pos[1]
+        
+
         if self.game_state == 1:
             self.all_sprites_list.update()
-            # See if the player block has collided with anything.
-
-            # if self.tick == 120:
-            #     self.tick = 0
-            #     for ship in self.enemy_list:
-            #         x = ship.rect.x
-            #         y = ship.rect.y
-            #         bullet = bullet_library.Bullet(BULLET, x, y, x, SCREEN_HEIGHT)
-            #         LASER[1].play()
-            #         self.all_sprites_list.add(bullet)
-            #         self.bullet_list.add(bullet)
-            # self.tick += 1
 
             for bullet in self.bullet_list:
                 bullet_block_hit_list = pygame.sprite.spritecollide(
@@ -304,13 +300,7 @@ class Game():
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
                     badblock_library.BadBlock.reset_pos(block)
-                # bullet_ship_hit_list = pygame.sprite.spritecollide(self.player, bullet, True)
-                # for hit in bullet_ship_hit_list:
-                #     self.player.health_bar -= 2
-                #     self.bullet_list.remove(bullet)
-                #     self.all_sprites_list.remove(bullet)
-                #     if self.health_bar <= 0:
-                #         self.flag = 1
+
                 if bullet.rect.y < -10:
                     self.bullet_list.remove(bullet)
                     self.all_sprites_list.remove(bullet)
@@ -339,7 +329,6 @@ class Game():
 
             if len(self.good_block_list) == 0:
                 self.flag = 2
-
         if self.game_state == 2:
             self.all_sprites_list_1.update()
             # See if the player block has collided with anything.
@@ -418,7 +407,7 @@ class Game():
 
     def display_frame(self, screen):
 
-        if self.game_state == 0:
+        if self.game_state == 0:#main menu
 
             screen.blit(BACKGROUND_LIST[0], [0, 0])
             pygame.draw.rect(screen, BUTTONS_COLOR, [
@@ -429,32 +418,39 @@ class Game():
                              SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+10, 200, 50])
             pygame.draw.rect(
                 screen, BLACK, [SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+10, 200, 50], 4)
-            pygame.draw.rect(screen, BUTTONS_COLOR, [
-                             SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+70, 200, 50])
-            pygame.draw.rect(
-                screen, BLACK, [SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+70, 200, 50], 4)
+            
             game_titel_text = game_titel_font.render(
                 "Spacegame", True, WHITE)
             game_menu_play = game_menu_font.render(
                 "PLAY", True, WHITE)
-            game_menu_level = game_menu_font.render(
-                "LEVEL - COMING SOON", True, WHITE)
             game_menu_ships = game_menu_font.render(
-                "SHIPS - COMING SOON", True, WHITE)
+                "SHIPS", True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_titel_text.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_titel_text.get_height() // 2)
             screen.blit(game_titel_text, [x, y-150])
             x = (SCREEN_WIDTH // 2) - (game_menu_play.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_menu_play.get_height() // 2)
             screen.blit(game_menu_play, [x, y-25])
-            x = (SCREEN_WIDTH // 2) - (game_menu_level.get_width() // 2)
-            y = (SCREEN_HEIGHT // 2) - (game_menu_level.get_height() // 2)
-            screen.blit(game_menu_level, [x, y+35])
             x = (SCREEN_WIDTH // 2) - (game_menu_ships.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_menu_ships.get_height() // 2)
-            screen.blit(game_menu_ships, [x, y+95])
+            screen.blit(game_menu_ships, [x, y+35])
 
-        elif self.game_state == 1:
+        elif self.game_state == 0.1:#menu ship select
+            screen.blit(BACKGROUND_LIST[0], [0, 0])
+            pygame.draw.rect(screen,(47, 79, 79), [160, SCREEN_HEIGHT//2- 160, 896, 256]) # 96, 64
+            #pygame.draw.rect(screen,BLACK, [256+128*i, SCREEN_HEIGHT//2- 128, ship.get_width(), ship.get_height()], 4)
+            
+            for i in range(6):
+                ship = PLAYER_SHIP_LIST[i]
+                pygame.draw.rect(screen, BLACK, [232+128*i,SCREEN_HEIGHT//2-128, 96, 96], 4)
+                screen.blit(ship, [256+128*i, SCREEN_HEIGHT//2- 128])
+            ships_instructions = game_titel_font.render(
+                "Press ESC to get back to the main menu", True, WHITE)
+            x = (SCREEN_WIDTH // 2) - (ships_instructions.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (ships_instructions.get_height() // 2)
+            screen.blit(ships_instructions, [x, y+300])
+
+        elif self.game_state == 1:#level1
             screen.blit(BACKGROUND_LIST[1], [0, 0])
 
             self.all_sprites_list.draw(screen)
@@ -474,7 +470,7 @@ class Game():
                 screen.blit(HEALTH[self.health_bar], [
                     self.player.rect.x, self.player.rect.y - 4])
 
-        elif self.game_state == 2:
+        elif self.game_state == 2:#level2
             screen.blit(BACKGROUND_LIST[2], [0, 0])
 
             self.all_sprites_list_1.draw(screen)
@@ -494,7 +490,7 @@ class Game():
                 screen.blit(HEALTH[self.health_bar], [
                     self.player.rect.x, self.player.rect.y - 4])
 
-        elif self.game_state == 3:
+        elif self.game_state == 3:#level3
             screen.blit(BACKGROUND_LIST[3], [0, 0])
 
             self.all_sprites_list_2.draw(screen)
