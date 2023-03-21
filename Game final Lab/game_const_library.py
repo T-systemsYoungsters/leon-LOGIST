@@ -69,4 +69,6 @@ for i in range(1,7):
 
 #objects
 gem = pygame.image.load(os.path.join("resources", "gem-1.png"))
+ammo_5 = pygame.image.load(os.path.join("resources", "5.png"))
+ammo_10 = pygame.image.load(os.path.join("resources", "6.png"))
 asteroid_one = pygame.image.load(os.path.join("resources","asteroid.png"))
