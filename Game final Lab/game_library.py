@@ -147,7 +147,7 @@ class Game():
             block = badblock_library.BadBlock(-2, 2, ASTEROID_LIST[random.randrange(8,12,1)])
 
             # Set a random location for the block
-            block.rect.x = random.randrange(SCREEN_WIDTH+800)
+            block.rect.x = random.randrange(SCREEN_WIDTH+SCREEN_WIDTH)
             block.rect.y = random.randrange(-350, 350)
 
             # Add the block to the list of objects
