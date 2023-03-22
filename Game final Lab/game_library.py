@@ -75,7 +75,7 @@ class Game():
         # bad blocks
         for i in range(20):
             # This represents a block
-            block = badblock_library.BadBlock(0, 1, asteroid_one)
+            block = badblock_library.BadBlock(0, 1, ASTEROID_LIST[random.randrange(0,4,1)])
 
             # Set a random location for the block
             block.rect.x = random.randrange(SCREEN_WIDTH)
@@ -86,7 +86,7 @@ class Game():
             self.all_sprites_list.add(block)
 
         # good blocks
-        for i in range(60):
+        for i in range(45):
             # This represents a block
             block = goodblock_library.GoodBLock(gem)
 
@@ -110,10 +110,10 @@ class Game():
         # bad blocks
         for i in range(25):
             # This represents a block
-            block = badblock_library.BadBlock(1, 0, asteroid_one)
+            block = badblock_library.BadBlock(2, 0, ASTEROID_LIST[random.randrange(4,8,1)])
 
             # Set a random location for the block
-            block.rect.x = random.randrange(-600, 200)
+            block.rect.x = random.randrange(-1000, 200)
             block.rect.y = random.randrange(SCREEN_HEIGHT)
 
             # Add the block to the list of objects
@@ -121,7 +121,7 @@ class Game():
             self.all_sprites_list_1.add(block)
 
         # good blocks
-        for i in range(45):
+        for i in range(35):
             # This represents a block
             block = goodblock_library.GoodBLock(gem)
 
@@ -142,12 +142,12 @@ class Game():
         self.all_sprites_list_2 = pygame.sprite.Group()
 
         # bad blocks
-        for i in range(25):
+        for i in range(30):
             # This represents a block
-            block = badblock_library.BadBlock(-2, 2, asteroid_one)
+            block = badblock_library.BadBlock(-2, 2, ASTEROID_LIST[random.randrange(8,12,1)])
 
             # Set a random location for the block
-            block.rect.x = random.randrange(SCREEN_WIDTH+450)
+            block.rect.x = random.randrange(SCREEN_WIDTH+800)
             block.rect.y = random.randrange(-350, 350)
 
             # Add the block to the list of objects
@@ -184,7 +184,7 @@ class Game():
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.__init__()
                 self.health_bar = 10
-            elif self.game_state == 10 and even.type == pygame.MOUSEBUTTONDOWN: 
+            elif self.game_state == 10 and event.type == pygame.MOUSEBUTTONDOWN: 
                 game_state = 0
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1

@@ -71,4 +71,7 @@ for i in range(1,7):
 gem = pygame.image.load(os.path.join("resources", "gem-1.png"))
 ammo_5 = pygame.image.load(os.path.join("resources", "5.png"))
 ammo_10 = pygame.image.load(os.path.join("resources", "6.png"))
-asteroid_one = pygame.image.load(os.path.join("resources","asteroid.png"))
+ASTEROID_LIST = []
+for i in range(12):
+    asteroid = pygame.image.load(os.path.join("resources",f"asteroid{i}.png"))
+    ASTEROID_LIST.append(asteroid)
