@@ -211,7 +211,8 @@ class Game():
                     self.bullet_image = BULLET_LIST[3]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 840 and self.mouse_x > 744 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    bullet_image = BULLET_LIST[4]
+                    self.player_ship = PLAYER_SHIP_LIST[4]
+                    self.bullet_image = BULLET_LIST[4]
                     SELECT.play()
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 968 and self.mouse_x > 872 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
                     self.player_ship = PLAYER_SHIP_LIST[5]
