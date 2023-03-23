@@ -8,6 +8,7 @@ import player_library
 import enemy_ships_library
 import os
 import time
+import json
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #good_block = pygame.mixer.Sound("good_block.wav")
@@ -48,13 +49,24 @@ class Game():
     game_state = 0  # (0:Startscreen, 1:Play Level1, 8:Game Won,9:Game Over)
     health_bar = 10
     score = 0
+    previous_score = 0
+    high_score = 0
     #tick = 0
 
     mouse_pos = []
 
     def __init__(self):
-        self.health_bar = 10
+
+        
+        
+        try:
+            with open('game_score.txt') as score_file:
+                self.high_score = json.load(score_file)   
+        except:
+            print("No json file found")
+
         self.score = 0
+        self.health_bar = 10
         #self.game_over = False
         self.game_state = 0
         self.flag = 0
@@ -180,12 +192,25 @@ class Game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                with open('game_score.txt', 'w') as score_file:
+                    json.dump(self.high_score, score_file)
                 return True
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
+                self.previous_score = self.score
+                if self.score > self.high_score:
+                    self.high_score = self.score
+                with open('game_score.txt', 'w') as score_file:
+                    json.dump(self.high_score, score_file)
                 self.__init__()
                 self.health_bar = 10
             elif self.game_state == 10 and event.type == pygame.MOUSEBUTTONDOWN: 
-                game_state = 0
+                self.previous_score = self.score
+                if self.score > self.high_score:
+                    self.high_score = self.score
+                with open('game_score.txt', 'w') as score_file:
+                    json.dump(self.high_score, score_file)
+                self.__init__()
+                self.health_bar = 10
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < SCREEN_WIDTH/2+100 and self.mouse_x > SCREEN_WIDTH/2-100 and self.mouse_y > SCREEN_HEIGHT/2-50 and self.mouse_y < SCREEN_HEIGHT/2:
                 self.game_state = 1
 
@@ -220,6 +245,7 @@ class Game():
                     SELECT.play()
                 self.player.image = self.player_ship
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
+                
                 self.game_state = 2  # level2
                 self.health_bar = 10
                 self.flag = 0
@@ -664,9 +690,18 @@ class Game():
             screen.blit(BACKGROUND_LIST[9], [0, 0])
             game_over_text = game_titel_font.render(
                 "Game Over \n leftclick to get back to the menu", True, WHITE)
+            score_text = game_titel_font.render(
+                "Your Score is: "+ str(self.score), True, WHITE)
+            previous_score_text = game_titel_font.render(
+                "Your previous Score was: "+ str(self.previous_score), True, WHITE)
+            high_score_text = game_titel_font.render(
+                "The Highscore is:" + str(self.high_score), True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
-            y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2) - 200
             screen.blit(game_over_text, [x, y])
+            screen.blit(score_text, [x, y+150])
+            screen.blit(previous_score_text, [x, y+200])
+            screen.blit(high_score_text, [x, y+250])
 
         elif self.game_state == 10:
             time.sleep(1)
@@ -674,6 +709,15 @@ class Game():
             game_won_text = game_titel_font.render(
                 "You won! leftclick to get back to the menu", True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_won_text.get_width() // 2)
-            y = (SCREEN_HEIGHT // 2) - (game_won_text.get_height() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_won_text.get_height() // 2)-200
+            score_text = game_titel_font.render(
+                "Your Score is: "+ str(self.score), True, WHITE)
+            previous_score_text = game_titel_font.render(
+                "Your previous Score was: "+ str(self.previous_score), True, WHITE)
+            high_score_text = game_titel_font.render(
+                "The Highscore is:" + str(self.high_score), True, WHITE)
             screen.blit(game_won_text, [x, y])
+            screen.blit(score_text, [x, y+150])
+            screen.blit(previous_score_text, [x, y+200])
+            screen.blit(high_score_text, [x, y+250])
         pygame.display.flip()
