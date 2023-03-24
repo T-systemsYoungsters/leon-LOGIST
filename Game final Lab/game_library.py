@@ -60,7 +60,7 @@ class Game():
         
         
         try:
-            with open('game_score.txt') as score_file:
+            with open('game_score.json') as score_file:
                 self.high_score = json.load(score_file)   
         except:
             print("No json file found")
@@ -192,14 +192,14 @@ class Game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                with open('game_score.txt', 'w') as score_file:
+                with open('game_score.json', 'w') as score_file:
                     json.dump(self.high_score, score_file)
                 return True
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.previous_score = self.score
                 if self.score > self.high_score:
                     self.high_score = self.score
-                with open('game_score.txt', 'w') as score_file:
+                with open('game_score.json', 'w') as score_file:
                     json.dump(self.high_score, score_file)
                 self.__init__()
                 self.health_bar = 10
@@ -207,7 +207,7 @@ class Game():
                 self.previous_score = self.score
                 if self.score > self.high_score:
                     self.high_score = self.score
-                with open('game_score.txt', 'w') as score_file:
+                with open('game_score.json', 'w') as score_file:
                     json.dump(self.high_score, score_file)
                 self.__init__()
                 self.health_bar = 10
