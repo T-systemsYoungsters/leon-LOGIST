@@ -63,7 +63,7 @@ class Game():
             with open('game_score.json') as score_file:
                 self.high_score = json.load(score_file)   
         except:
-            print("No json file found")
+            print("No json file yet")
 
         self.score = 0
         self.health_bar = 10
