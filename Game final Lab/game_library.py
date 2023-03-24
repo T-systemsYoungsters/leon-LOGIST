@@ -5,7 +5,6 @@ import goodblock_library
 import bullet_library
 from game_const_library import *
 import player_library
-import enemy_ships_library
 import os
 import time
 import json
@@ -13,7 +12,6 @@ import json
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #good_block = pygame.mixer.Sound("good_block.wav")
 #bad_block = pygame.mixer.Sound("bad_block.wav")
-
 
 class Game():
     # level1
@@ -57,10 +55,8 @@ class Game():
 
     mouse_pos = []
 
-    def __init__(self):
+    def __init__(self): 
 
-        
-        
         try:
             with open('game_score.json', 'r') as high_score_file:
                 self.high_score = json.load(high_score_file)   
