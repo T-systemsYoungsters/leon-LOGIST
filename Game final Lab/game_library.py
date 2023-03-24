@@ -51,6 +51,8 @@ class Game():
     score = 0
     previous_score = 0
     high_score = 0
+    high_score_name = None
+    new_high_score = False
     #tick = 0
 
     mouse_pos = []
@@ -60,8 +62,8 @@ class Game():
         
         
         try:
-            with open('game_score.json') as score_file:
-                self.high_score = json.load(score_file)   
+            with open('game_score.json', 'r') as high_score_file:
+                self.high_score = json.load(high_score_file)   
         except:
             print("No json file yet")
 
@@ -72,7 +74,8 @@ class Game():
         self.flag = 0
         #self.tick = 0
         self.key_flag = 0
-
+        self.high_score_name = None
+        self.new_high_score = False
         self.bad_block_list = pygame.sprite.Group()
         self.good_block_list = pygame.sprite.Group()
         #self.enemy_list = pygame.sprite.Group()
@@ -282,6 +285,16 @@ class Game():
                         self.all_sprites_list_2.add(bullet)         
                     self.bullet_list.add(bullet)
                 else: EMPTY.play()
+
+            elif self.new_high_score and event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_BACKSPACE:
+                    self.high_score_name = self.high_score_name[0:-1]
+                    https://www.youtube.com/watch?v=Rvcyf4HsWiw minute 8
+                    
+                else:
+                    self.high_score_name += event.unicode
+
+
 
             elif event.type == pygame.KEYDOWN:
 
@@ -619,12 +632,16 @@ class Game():
             screen.blit(text_ammo, [SCREEN_WIDTH-text_ammo.get_width()-40, SCREEN_HEIGHT - 40])
 
             if self.flag == 1:
+                if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                 screen.blit(HEALTH[0], [
                     self.player.rect.x, self.player.rect.y - 4])
                 self.game_state = 9
 
             else:
                 if self.flag == 2:
+                    if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                     self.game_state = 8
                 screen.blit(HEALTH[self.health_bar], [
                     self.player.rect.x, self.player.rect.y - 4])
@@ -639,12 +656,16 @@ class Game():
             text_ammo = font.render("AMMO: "+ str(self.player.ammo), True , WHITE)
             screen.blit(text_ammo, [SCREEN_WIDTH-text_ammo.get_width()-40, SCREEN_HEIGHT - 40])
             if self.flag == 1:
+                if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                 screen.blit(HEALTH[0], [
                     self.player.rect.x, self.player.rect.y - 4])
                 self.game_state = 9
 
             else:
                 if self.flag == 2:
+                    if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                     self.game_state = 7
                 screen.blit(HEALTH[self.health_bar], [
                     self.player.rect.x, self.player.rect.y - 4])
@@ -659,12 +680,16 @@ class Game():
             text_ammo = font.render("AMMO: "+ str(self.player.ammo), True , WHITE)
             screen.blit(text_ammo, [SCREEN_WIDTH-text_ammo.get_width()-40, SCREEN_HEIGHT - 40])
             if self.flag == 1:
+                if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                 screen.blit(HEALTH[0], [
                     self.player.rect.x, self.player.rect.y - 4])
                 self.game_state = 9
 
             else:
                 if self.flag == 2:
+                    if self.high_score["Score"] < self.score:
+                        self.new_high_score = True
                     self.game_state = 10
                 screen.blit(HEALTH[self.health_bar], [
                     self.player.rect.x, self.player.rect.y - 4])
@@ -695,7 +720,7 @@ class Game():
             previous_score_text = game_titel_font.render(
                 "Your previous Score was: "+ str(self.previous_score), True, WHITE)
             high_score_text = game_titel_font.render(
-                "The Highscore is:" + str(self.high_score), True, WHITE)
+                "The Highscore is: " +self.high_score["Name"]+ " "+str(self.high_score["Score"]), True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_over_text.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_over_text.get_height() // 2) - 200
             screen.blit(game_over_text, [x, y])
@@ -715,7 +740,7 @@ class Game():
             previous_score_text = game_titel_font.render(
                 "Your previous Score was: "+ str(self.previous_score), True, WHITE)
             high_score_text = game_titel_font.render(
-                "The Highscore is:" + str(self.high_score), True, WHITE)
+                "The Highscore is: " +self.high_score["Name"]+ " "+str(self.high_score["Score"]), True, WHITE)
             screen.blit(game_won_text, [x, y])
             screen.blit(score_text, [x, y+150])
             screen.blit(previous_score_text, [x, y+200])
