@@ -51,9 +51,13 @@ class Game():
     high_score = 0
     high_score_name = None
     new_high_score = False
+    menu_ship = None
+    
     #tick = 0
 
     mouse_pos = []
+    mouse_x = 0
+    mouse_y = 0
 
     def __init__(self): 
 
@@ -82,6 +86,11 @@ class Game():
         self.ammo_list_10 = pygame.sprite.Group()
 
         self.all_sprites_list = pygame.sprite.Group()
+        self.mouse_pos = []
+        self.mouse_x = 0
+        self.mouse_y = 0
+
+        self.menu_ship = MENU_SHIPS[0]
 
         # bad blocks
         for i in range(20):
@@ -217,7 +226,7 @@ class Game():
 
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < (SCREEN_WIDTH//2)+100 and self.mouse_x > (SCREEN_WIDTH//2)-100 and self.mouse_y > (SCREEN_HEIGHT//2)+10 and self.mouse_y < (SCREEN_HEIGHT//2)+60:
                 self.game_state = 0.1
-            elif self.game_state == 0.1:
+            elif self.game_state == 0.1 or self.game_state == 0.2:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.game_state = 0
                 elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 328 and self.mouse_x > 232 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
@@ -272,12 +281,15 @@ class Game():
                     
                 elif len(self.high_score_name)<15:
                     self.high_score_name += event.unicode
+    	    
+            elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < (SCREEN_WIDTH//2) + 100 and self.mouse_x > (SCREEN_WIDTH//2)-100 and self.mouse_y < (SCREEN_HEIGHT//2)+120 and self.mouse_y > (SCREEN_HEIGHT//2)+70:#SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+70, 200, 50
+                self.game_state = 0.2
 
             elif event.type == pygame.MOUSEBUTTONDOWN and (self.game_state == 1 or self.game_state == 2 or self.game_state == 3):
                 if self.player.ammo != 0:
-                    self.mouse_pos = pygame.mouse.get_pos()
-                    self.mouse_x = self.mouse_pos[0]
-                    self.mouse_y = self.mouse_pos[1]
+                    # self.mouse_pos = pygame.mouse.get_pos()
+                    # self.mouse_x = self.mouse_pos[0]
+                    # self.mouse_y = self.mouse_pos[1]
                     bullet = bullet_library.Bullet(
                         self.bullet_image, self.player.rect.x, self.player.rect.y, self.mouse_x, self.mouse_y)
                     LASER[0].play()
@@ -336,10 +348,11 @@ class Game():
         return False
 
     def run_logic(self):
-        if self.game_state == 0 or self.game_state == 0.1:
-            self.mouse_pos = pygame.mouse.get_pos()
-            self.mouse_x = self.mouse_pos[0]
-            self.mouse_y = self.mouse_pos[1]
+
+        self.mouse_pos = pygame.mouse.get_pos()
+        self.mouse_x = self.mouse_pos[0]
+        self.mouse_y = self.mouse_pos[1]
+            
         
 
         if self.game_state == 1:
@@ -591,12 +604,19 @@ class Game():
             pygame.draw.rect(
                 screen, BLACK, [SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+10, 200, 50], 4)
             
+            pygame.draw.rect(screen, BUTTONS_COLOR, [
+                             SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+70, 200, 50])
+            pygame.draw.rect(
+                screen, BLACK, [SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2+70, 200, 50], 4)
+
             game_titel_text = game_titel_font.render(
                 "Spacegame", True, WHITE)
             game_menu_play = game_menu_font.render(
                 "PLAY", True, WHITE)
             game_menu_ships = game_menu_font.render(
                 "SHIPS", True, WHITE)
+            game_score_list_text = game_menu_font.render(
+                "Highscore List", True, WHITE)
             x = (SCREEN_WIDTH // 2) - (game_titel_text.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_titel_text.get_height() // 2)
             screen.blit(game_titel_text, [x, y-150])
@@ -606,22 +626,45 @@ class Game():
             x = (SCREEN_WIDTH // 2) - (game_menu_ships.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (game_menu_ships.get_height() // 2)
             screen.blit(game_menu_ships, [x, y+35])
+            x = (SCREEN_WIDTH // 2) - (game_score_list_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (game_score_list_text.get_height() // 2)
+            screen.blit(game_score_list_text, [x, y+95])
 
         elif self.game_state == 0.1:#menu ship select
             screen.blit(BACKGROUND_LIST[0], [0, 0])
-            menu = pygame.draw.rect(screen,(47, 79, 79), [160, SCREEN_HEIGHT//2- 160, 896, 256]) # 96, 64
+            menu = pygame.draw.rect(screen,ALICE_BLUE, [SCREEN_WIDTH//2-160, SCREEN_HEIGHT//2-240, 320, 480])
+            pygame.draw.rect(screen,BLACK, [SCREEN_WIDTH//2-160, SCREEN_HEIGHT//2-240, 320, 480],4) # 96, 64
             #pygame.draw.rect(screen,BLACK, [256+128*i, SCREEN_HEIGHT//2- 128, ship.get_width(), ship.get_height()], 4)
             
             for i in range(6):
-                ship = PLAYER_SHIP_LIST[i]
-                pygame.draw.rect(screen, BLACK, [232+128*i,SCREEN_HEIGHT//2-128, 96, 96], 4)
-                screen.blit(ship, [256+128*i, SCREEN_HEIGHT//2- 128])
+                x = SCREEN_WIDTH//2 - 150 
+                y = SCREEN_HEIGHT//2 - 230
+                pygame.draw.rect(screen, MARINE_BLUE, [SCREEN_WIDTH//2 - 140, SCREEN_HEIGHT//2+180, 240, 40])  
+                for i in range(6):
+                    pygame.draw.rect(screen, WHITE, [SCREEN_WIDTH//2 - 140 + 40*i , SCREEN_HEIGHT//2+180, 40, 40],3)
+                    number = game_titel_font.render(str(i), True, WHITE)  
+                    screen.blit(number, [10+SCREEN_WIDTH//2 - 140 + 40*i, SCREEN_HEIGHT//2+180])         
+                screen.blit(self.menu_ship, [x, y])
             ships_instructions = game_titel_font.render(
-                "Press ESC to get back to the main menu", True, WHITE)
+                "Press ESC to get back to the main menu", True, (87, 119, 119))
             x = (SCREEN_WIDTH // 2) - (ships_instructions.get_width() // 2)
             y = (SCREEN_HEIGHT // 2) - (ships_instructions.get_height() // 2)
+            pygame.draw.ellipse(screen, MARINE_BLUE, [x-30,y+300-ships_instructions.get_height()//2, ships_instructions.get_width()+60, 2*ships_instructions.get_height()])
             screen.blit(ships_instructions, [x, y+300])
+        elif self.game_state == 0.2: #highscorelist
+            screen.blit(BACKGROUND_LIST[8], [0,0])
+            pygame.draw.rect(screen, ALICE_BLUE, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400])
+            pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400],3)
 
+            
+
+            high_score_text = game_titel_font.render(
+                "Press ESC to get back to the main menu", True, (87, 119, 119))
+            x = (SCREEN_WIDTH // 2) - (high_score_text.get_width() // 2)
+            y = (SCREEN_HEIGHT // 2) - (high_score_text.get_height() // 2)
+            pygame.draw.ellipse(screen, MARINE_BLUE, [x-30,y+300-high_score_text.get_height()//2, high_score_text.get_width()+60, 2*high_score_text.get_height()])
+            screen.blit(high_score_text, [x, y+300])
+            #pygame.draw.rect(screen, BLACK)
         elif self.game_state == 1:#level1
             screen.blit(BACKGROUND_LIST[1], [0, 0])
 

@@ -10,6 +10,8 @@ RED   = (255,   0,   0)
 BLUE  = (  0,   0, 255)
 GREEN = (  0, 255,   0)
 BUTTONS_COLOR = (119, 136, 153)
+ALICE_BLUE = (240, 248, 255)
+MARINE_BLUE = (0,0,128)
 
 # Set the height and width of the screen
 info = pygame.display.Info()
@@ -63,9 +65,14 @@ for i in range(12,19):
 
 #player-ships
 PLAYER_SHIP_LIST = []
+MENU_SHIPS = []
+
 for i in range(1,7):
     ship = pygame.image.load(os.path.join("resources", f"ship1 ({i}).png"))
     PLAYER_SHIP_LIST.append(ship)
+    ship = pygame.image.load(os.path.join("resources",f"menu_ship_{i}.png"))
+    MENU_SHIPS.append(ship)
+    
 
 #objects
 gem = pygame.image.load(os.path.join("resources", "gem-1.png"))
