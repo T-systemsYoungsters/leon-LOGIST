@@ -610,7 +610,7 @@ class Game():
 
         elif self.game_state == 0.1:#menu ship select
             screen.blit(BACKGROUND_LIST[0], [0, 0])
-            pygame.draw.rect(screen,(47, 79, 79), [160, SCREEN_HEIGHT//2- 160, 896, 256]) # 96, 64
+            menu = pygame.draw.rect(screen,(47, 79, 79), [160, SCREEN_HEIGHT//2- 160, 896, 256]) # 96, 64
             #pygame.draw.rect(screen,BLACK, [256+128*i, SCREEN_HEIGHT//2- 128, ship.get_width(), ship.get_height()], 4)
             
             for i in range(6):
