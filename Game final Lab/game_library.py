@@ -226,34 +226,44 @@ class Game():
 
             elif self.game_state == 0 and event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < (SCREEN_WIDTH//2)+100 and self.mouse_x > (SCREEN_WIDTH//2)-100 and self.mouse_y > (SCREEN_HEIGHT//2)+10 and self.mouse_y < (SCREEN_HEIGHT//2)+60:
                 self.game_state = 0.1
+            
+            
             elif self.game_state == 0.1 or self.game_state == 0.2:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.game_state = 0
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 328 and self.mouse_x > 232 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[0]
-                    self.bullet_image = BULLET_LIST[0]
-                    SELECT.play()
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 456 and self.mouse_x > 360 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[1]
-                    self.bullet_image = BULLET_LIST[1]
-                    SELECT.play()
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 584 and self.mouse_x > 488 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[2]
-                    self.bullet_image = BULLET_LIST[2]
-                    SELECT.play()
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 712 and self.mouse_x > 616 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[3]
-                    self.bullet_image = BULLET_LIST[3]
-                    SELECT.play()
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 840 and self.mouse_x > 744 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[4]
-                    self.bullet_image = BULLET_LIST[4]
-                    SELECT.play()
-                elif event.type == pygame.MOUSEBUTTONDOWN and self.mouse_x < 968 and self.mouse_x > 872 and self.mouse_y > SCREEN_HEIGHT/2-128 and self.mouse_y < SCREEN_HEIGHT/2-32:
-                    self.player_ship = PLAYER_SHIP_LIST[5]
-                    self.bullet_image = BULLET_LIST[5]
-                    SELECT.play()
-                self.player.image = self.player_ship
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.mouse_x < SCREEN_WIDTH//2 + 100 and self.mouse_x > SCREEN_WIDTH//2+60 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180: 
+                        self.menu_ship = MENU_SHIPS[5]
+                        self.player_ship = PLAYER_SHIP_LIST[5]
+                        self.bullet_image = BULLET_LIST[5]
+                        SELECT.play()
+                    elif self.mouse_x < SCREEN_WIDTH//2 + 60 and self.mouse_x > SCREEN_WIDTH//2+20 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180:
+                        self.menu_ship = MENU_SHIPS[4]
+                        self.player_ship = PLAYER_SHIP_LIST[4]
+                        self.bullet_image = BULLET_LIST[4]
+                        SELECT.play()
+                    elif self.mouse_x < SCREEN_WIDTH//2 + 20 and self.mouse_x > SCREEN_WIDTH//2-20 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180:
+                        self.menu_ship = MENU_SHIPS[3]
+                        self.player_ship = PLAYER_SHIP_LIST[3]
+                        self.bullet_image = BULLET_LIST[3]
+                        SELECT.play()
+                    elif self.mouse_x < SCREEN_WIDTH//2 + -20 and self.mouse_x > SCREEN_WIDTH//2-60 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180:
+                        self.menu_ship = MENU_SHIPS[2]
+                        self.player_ship = PLAYER_SHIP_LIST[2]
+                        self.bullet_image = BULLET_LIST[2]
+                        SELECT.play()
+                    elif self.mouse_x < SCREEN_WIDTH//2 + -60 and self.mouse_x > SCREEN_WIDTH//2-100 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180:
+                        self.menu_ship = MENU_SHIPS[1]
+                        self.player_ship = PLAYER_SHIP_LIST[1]
+                        self.bullet_image = BULLET_LIST[1]
+                        SELECT.play()
+                    elif self.mouse_x < SCREEN_WIDTH//2 + -100 and self.mouse_x > SCREEN_WIDTH//2-140 and self.mouse_y <SCREEN_HEIGHT//2 + 220 and self.mouse_y > SCREEN_HEIGHT//2+180:
+                        self.menu_ship = MENU_SHIPS[0]
+                        self.player_ship = PLAYER_SHIP_LIST[0]
+                        self.bullet_image = BULLET_LIST[0]
+                        SELECT.play()
+                    #[SCREEN_WIDTH//2 - 140, SCREEN_HEIGHT//2+180, 240, 40]
+                    self.player.image = self.player_ship
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and self.game_state == 8:
                 
                 self.game_state = 2  # level2
@@ -287,9 +297,6 @@ class Game():
 
             elif event.type == pygame.MOUSEBUTTONDOWN and (self.game_state == 1 or self.game_state == 2 or self.game_state == 3):
                 if self.player.ammo != 0:
-                    # self.mouse_pos = pygame.mouse.get_pos()
-                    # self.mouse_x = self.mouse_pos[0]
-                    # self.mouse_y = self.mouse_pos[1]
                     bullet = bullet_library.Bullet(
                         self.bullet_image, self.player.rect.x, self.player.rect.y, self.mouse_x, self.mouse_y)
                     LASER[0].play()
@@ -644,7 +651,8 @@ class Game():
                     pygame.draw.rect(screen, WHITE, [SCREEN_WIDTH//2 - 140 + 40*i , SCREEN_HEIGHT//2+180, 40, 40],3)
                     number = game_titel_font.render(str(i), True, WHITE)  
                     screen.blit(number, [10+SCREEN_WIDTH//2 - 140 + 40*i, SCREEN_HEIGHT//2+180])         
-                screen.blit(self.menu_ship, [x, y])
+                screen.blit(self.menu_ship, [SCREEN_WIDTH//2 - self.menu_ship.get_width()//2, y])
+                
             ships_instructions = game_titel_font.render(
                 "Press ESC to get back to the main menu", True, (87, 119, 119))
             x = (SCREEN_WIDTH // 2) - (ships_instructions.get_width() // 2)
@@ -655,8 +663,6 @@ class Game():
             screen.blit(BACKGROUND_LIST[8], [0,0])
             pygame.draw.rect(screen, ALICE_BLUE, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400])
             pygame.draw.rect(screen, BLACK, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400],3)
-
-            
 
             high_score_text = game_titel_font.render(
                 "Press ESC to get back to the main menu", True, (87, 119, 119))
