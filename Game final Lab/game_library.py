@@ -268,8 +268,7 @@ class Game():
 
             elif (self.new_high_score and event.type == pygame.KEYDOWN) and (self.game_state == 9 or self.game_state == 10):
                 if event.key == pygame.K_BACKSPACE:
-                    self.high_score_name = self.high_score_name[0:-1]
-                    # https://www.youtube.com/watch?v=Rvcyf4HsWiw minute 8
+                    self.high_score_name = self.high_score_name[0:-1]                   
                     
                 elif len(self.high_score_name)<15:
                     self.high_score_name += event.unicode
