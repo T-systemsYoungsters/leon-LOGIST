@@ -20,6 +20,14 @@ class BadBlock(block_library.Block):
     def update(self):
         self.rect.x += self.x
         self.rect.y += self.y
-        if self.rect.y > 740 or self.rect.x >1300:
-            self.reset_pos()
+        if self.x < 0 and self.y > 0:
+            if self.rect.y > 740 or self.rect.x < -50:
+                self.reset_pos()
+        elif self.x != 0:
+            if  self.rect.x > 1400 or self.rect.x < - 300:
+                self.reset_pos()
+        elif self.y != 0:
+            if self.rect.y > 800 or self.rect.y < -200:
+                self.reset_pos()
+        
         
