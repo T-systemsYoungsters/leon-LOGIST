@@ -204,8 +204,7 @@ class Game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                with open('game_score.json', 'w') as score_file:
-                    json.dump(self.high_score, score_file)
+                
                 return True
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.previous_score = self.score
