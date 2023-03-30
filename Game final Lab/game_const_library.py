@@ -24,6 +24,7 @@ SCREEN_HEIGHT = 720#info.current_h
 font = pygame.font.Font("C:/Windows/Fonts/RAVIE.TTF", 25)
 game_menu_font = pygame.font.SysFont("serif", 25)
 game_titel_font = pygame.font.SysFont("serif", 35)
+
 #music and sounds
 BACKGROUND_MUSIC = []
 BACKGROUND_MUSIC.append(pygame.mixer.music.load(os.path.join("music", "a_block_in_space.ogg")))

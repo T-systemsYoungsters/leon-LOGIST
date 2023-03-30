@@ -204,7 +204,7 @@ class Game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                
+
                 return True
             if self.game_state == 9 and event.type == pygame.MOUSEBUTTONDOWN:
                 self.previous_score = self.score
@@ -664,6 +664,11 @@ class Game():
                              SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400])
             pygame.draw.rect(
                 screen, BLACK, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400], 3)
+
+            high_score_text = game_menu_font.render(
+                "The Highscore is: " + self.high_score["Name"] + ": "+str(self.high_score["Score"]), True, BLACK)
+            screen.blit(high_score_text, [SCREEN_WIDTH//2 - high_score_text.get_width(
+            )//2, SCREEN_HEIGHT//2-200+high_score_text.get_width()//2])
 
             high_score_text = game_titel_font.render(
                 "Press ESC to get back to the main menu", True, (87, 119, 119))
