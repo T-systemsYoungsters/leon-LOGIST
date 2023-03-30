@@ -629,6 +629,21 @@ class Game():
             y = (SCREEN_HEIGHT // 2) - (game_score_list_text.get_height() // 2)
             screen.blit(game_score_list_text, [x, y+95])
 
+            pygame.draw.rect(screen, ALICE_BLUE, [
+                             SCREEN_WIDTH//2+200, SCREEN_HEIGHT//2-200, 300, 400])
+            pygame.draw.rect(
+                screen, BLACK, [SCREEN_WIDTH//2+200, SCREEN_HEIGHT//2-200, 300, 400], 3)
+
+            high_score_text = game_menu_font.render(
+                "The current Highscore is: ", True, BLACK)
+            stats = game_menu_font.render(
+                "Game Stats: ", True, BLACK)
+            high_Score_text_2 = game_menu_font.render(self.high_score["Name"] + ": "+str(self.high_score["Score"]), True, BLACK)
+            screen.blit(stats, [SCREEN_WIDTH//2+200, SCREEN_HEIGHT//2-150])
+            screen.blit(high_score_text, [SCREEN_WIDTH//2+200, SCREEN_HEIGHT//2-100])
+            screen.blit(high_Score_text_2, [SCREEN_WIDTH//2+200, SCREEN_HEIGHT//2-100+high_Score_text_2.get_height()])
+
+
         elif self.game_state == 0.1:  # menu ship select
             screen.blit(BACKGROUND_LIST[0], [0, 0])
             menu = pygame.draw.rect(screen, ALICE_BLUE, [
@@ -660,15 +675,7 @@ class Game():
             screen.blit(ships_instructions, [x, y+300])
         elif self.game_state == 0.2:  # highscorelist
             screen.blit(BACKGROUND_LIST[8], [0, 0])
-            pygame.draw.rect(screen, ALICE_BLUE, [
-                             SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400])
-            pygame.draw.rect(
-                screen, BLACK, [SCREEN_WIDTH//2-150, SCREEN_HEIGHT//2-200, 300, 400], 3)
-
-            high_score_text = game_menu_font.render(
-                "The Highscore is: " + self.high_score["Name"] + ": "+str(self.high_score["Score"]), True, BLACK)
-            screen.blit(high_score_text, [SCREEN_WIDTH//2 - high_score_text.get_width(
-            )//2, SCREEN_HEIGHT//2-200+high_score_text.get_width()//2])
+            
 
             high_score_text = game_titel_font.render(
                 "Press ESC to get back to the main menu", True, (87, 119, 119))
